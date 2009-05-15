@@ -1,0 +1,10 @@
+README
+======
+
+About
+-----
+GAI stands for Groovy AI. It is the first Skirmish AI for the spring RTS game
+engine written in the Groovy programing language, which is one of the languages
+supperted by the Java VM.
+
+

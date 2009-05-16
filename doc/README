@@ -7,4 +7,18 @@ GAI stands for Groovy AI. It is the first Skirmish AI for the spring RTS game
 engine written in the Groovy programing language, which is one of the languages
 supperted by the Java VM.
 
+Conventions
+-----------
+General:
+The AI will be written in Groovy, using the Java AI Interface, and will use an
+Agent based strategy on the highest level.
+
+Used Formats:
+* Lyx is used for documentation. It combines the comfort of using OpenOffice
+  with the automatic good design of LaTeX.
+  www.lyx.org
+* Diagramms and graphics are kept in SVG format. Use Inkscape for example, to
+  edit.
+* For AI algorithm, the WEKA framework may be used.
+  http://www.cs.waikato.ac.nz/ml/weka/
 

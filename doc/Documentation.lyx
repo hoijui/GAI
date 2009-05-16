@@ -1,0 +1,134 @@
+#LyX 1.6.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass paper
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_amsmath 0
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+GAI
+\end_layout
+
+\begin_layout SubTitle
+Groovy Artificial Intelligence for the Spring RTS game engine
+\end_layout
+
+\begin_layout Date
+Date 
+\end_layout
+
+\begin_layout Author
+Agon (Marcel) & hoijui (Robin Vobruba)
+\end_layout
+
+\begin_layout Author
+hoijui (Robin Vobruba)
+\end_layout
+
+\begin_layout Abstract
+This project is to examine the efeasability of using the Groovy programming
+ language to write a Skirmish AI for the spring RTS game engine.
+ The goal is to learn Groovy, and design a solid base AI infrastructure,
+ that can be more or less easily extended to support multiple games.
+\end_layout
+
+\begin_layout Part
+Design
+\end_layout
+
+\begin_layout Standard
+In this section, we will outline the high level design of GAI.
+ For more details see fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:structuralDesign"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:structuralDesign"
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The structural design of GAI
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename fig/structuralDesign.svg
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

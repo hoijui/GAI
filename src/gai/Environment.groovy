@@ -23,24 +23,22 @@
 package gai;
 
 
-import com.clan_sy.spring.ai.oo.OOAI;
-import com.clan_sy.spring.ai.oo.OOAICallback;
-import com.clan_sy.spring.ai.oo.OOAIFactory;
-
 /**
- * The main entry point of the AI, from the engines point of view.
- * Only a single instance of this class is created, which then initializes
- * all one AI instance per team.
+ * Central point of reference of the inner architecture of the AI.
+ * All globaly important parts of the AI are referenced.
+ * So this can be seen as the skeleton of the (micro-)kernel.
+ * For further info about the architecture of the AI,
+ * see {@link http://springrts.com/wiki/AI:GAI the spring Wiki}
+ * and {@link http://wiki.github.com/hoijui/springGAI the GAI Wiki}.
  *
  * @author Marcel Hauf <marcel.hauf@googlemail.com>
  * @author Robin Vobruba <hoijui.quaero@gmail.com>
  */
-public class AIFactory extends OOAIFactory {
+interface Environment extends AgentEnvironment {
 
-	public AIFactory() {}
-
-	@Override
-	public OOAI createAI(int teamId, OOAICallback callback) {
-		return new GAI();
-	}
+	/**
+	 * Returns a number that uniquely identifies an <code>Agent</code>
+	 * withing an AI instance.
+	 */
+	TaskQueue getTaskQueue();
 }

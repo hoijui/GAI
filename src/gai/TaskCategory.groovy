@@ -23,24 +23,16 @@
 package gai;
 
 
-import com.clan_sy.spring.ai.oo.OOAI;
-import com.clan_sy.spring.ai.oo.OOAICallback;
-import com.clan_sy.spring.ai.oo.OOAIFactory;
-
 /**
- * The main entry point of the AI, from the engines point of view.
- * Only a single instance of this class is created, which then initializes
- * all one AI instance per team.
+ * Specifies the category/type of a <code>Task</code>.
+ * This is mainly used to distinguish which <code>Agent</code> is best
+ * suited to process a <code>Task</code>.
+ * You may think of it as a description in string form, for example
+ * "economy" or "attack".
  *
  * @author Marcel Hauf <marcel.hauf@googlemail.com>
  * @author Robin Vobruba <hoijui.quaero@gmail.com>
  */
-public class AIFactory extends OOAIFactory {
+interface TaskCategory extends Comparable<? extends TaskCategory> {
 
-	public AIFactory() {}
-
-	@Override
-	public OOAI createAI(int teamId, OOAICallback callback) {
-		return new GAI();
-	}
 }

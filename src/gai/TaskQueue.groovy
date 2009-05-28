@@ -23,24 +23,14 @@
 package gai;
 
 
-import com.clan_sy.spring.ai.oo.OOAI;
-import com.clan_sy.spring.ai.oo.OOAICallback;
-import com.clan_sy.spring.ai.oo.OOAIFactory;
-
 /**
- * The main entry point of the AI, from the engines point of view.
- * Only a single instance of this class is created, which then initializes
- * all one AI instance per team.
+ * Holds all active <code>Task</code>s for an AI instance.
+ * Ensures task priorities are followed and purges unprocessable tasks
+ * when queried.
  *
  * @author Marcel Hauf <marcel.hauf@googlemail.com>
  * @author Robin Vobruba <hoijui.quaero@gmail.com>
  */
-public class AIFactory extends OOAIFactory {
-
-	public AIFactory() {}
-
-	@Override
-	public OOAI createAI(int teamId, OOAICallback callback) {
-		return new GAI();
-	}
+interface TaskQueue extends AgentTaskQueue, Queue<Task> {
+	
 }

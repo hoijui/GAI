@@ -61,8 +61,4 @@ interface Task {
 	 * suited to process this <code>Task</code>.
 	 */
 	TaskCategory getCategory();
-	/**
-	 * TODO: describe
-	 */
-	TaskArguments getArguments();
 }

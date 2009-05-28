@@ -31,6 +31,6 @@ package gai;
  * @author Marcel Hauf <marcel.hauf@googlemail.com>
  * @author Robin Vobruba <hoijui.quaero@gmail.com>
  */
-interface TaskQueue extends AgentTaskQueue, Queue<Task> {
+interface TaskQueue extends Queue<Task> {
 	
 }

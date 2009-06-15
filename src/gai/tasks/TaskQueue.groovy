@@ -20,17 +20,16 @@
 	along with GAI; If not, see <http://www.gnu.org/licenses/>.
 */
 
-package gai;
+package gai.tasks;
 
+	
+import java.util.Queue;
 
 /**
  * Holds all active <code>Task</code>s for an AI instance.
  * Ensures task priorities are followed and purges unprocessable tasks
  * when queried.
- *
- * @author Marcel Hauf <marcel.hauf@googlemail.com>
- * @author Robin Vobruba <hoijui.quaero@gmail.com>
  */
-interface TaskQueue extends Queue<Task> {
+public interface TaskQueue extends Queue<Task> {
 	
 }

@@ -20,16 +20,13 @@
 	along with GAI; If not, see <http://www.gnu.org/licenses/>.
 */
 
-package gai;
+package gai.tasks;
 
 
 /**
  * <code>Task</code>s with higher priority are processed before
  * <code>Task</code>s with lower priority.
- *
- * @author Marcel Hauf <marcel.hauf@googlemail.com>
- * @author Robin Vobruba <hoijui.quaero@gmail.com>
  */
-interface TaskPriority extends Comparable<? extends TaskPriority> {
+public interface TaskPriority extends Comparable<TaskPriority> {
 
 }

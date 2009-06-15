@@ -20,7 +20,7 @@
 	along with GAI; If not, see <http://www.gnu.org/licenses/>.
 */
 
-package gai;
+package gai.agents;
 
 
 /**
@@ -31,17 +31,32 @@ package gai;
  * how to develop and share them,
  * see {@link http://springrts.com/wiki/AI:GAI the spring Wiki}
  * and {@link http://wiki.github.com/hoijui/springGAI the GAI Wiki}.
- *
- * @author Marcel Hauf <marcel.hauf@googlemail.com>
- * @author Robin Vobruba <hoijui.quaero@gmail.com>
  */
-interface Agent {
+public interface Agent {
 
 	/**
-	 * Returns a number that uniquely identifies an <code>Agent</code>
-	 * withing an AI instance.
+	 * Returns short and catchy name for this <code>Agent</code>,
+	 * for example "MicroWar", "Economy Manager" or "Build Site Manager".
 	 */
-	long getId();
+	String getName();
+
+	/**
+	 * Returns a descriptiong of this <code>Agent</code>, its abilities
+	 * and environmental requirements. Example:
+	 * "This Agent is able to manage small groups of warfare units in active combat." \
+	 * "For this to work, he needs Agents that create and assemble combat groups," \
+	 * "and combat relevant resources (eg. energy for lasers) to be available."
+	 */
+	String getDescription();
+
+	/**
+	 * Returns a descriptiong of this <code>Agent</code>, its abilities
+	 * and environmental requirements. Example:
+	 * "This Agent is able to manage small groups of warfare units in active combat." \
+	 * "For this to work, he needs Agents that create and assemble combat groups," \
+	 * "and combat relevant resources (eg. energy for lasers) to be available."
+	 */
+	AgentStatus getStatus();
 
 	/**
 	 * Initializes this <code>Agent</code>.
@@ -52,7 +67,7 @@ interface Agent {
 	 *
 	 * @param environment functions as the connection to the AI
 	 */
-	void initialize(AgentEnvironment environment);
+	void engage(AgentEnvironment environment);
 	/**
 	 * Destroys this <code>Agent</code>.
 	 * The <code>Agent</code> will not receive any queries
@@ -60,5 +75,5 @@ interface Agent {
 	 * It is still possible to access and use all parts of the AI
 	 * in this method, but not after it was called.
 	 */
-	void destroy();
+	void disengage();
 }

@@ -20,8 +20,12 @@
 	along with GAI; If not, see <http://www.gnu.org/licenses/>.
 */
 
-package gai;
+package gai.kernel;
 
+
+import gai.agents.Agent;
+import gai.agents.AgentEnvironment;
+import gai.tasks.TaskQueue;
 
 /**
  * Central point of reference of the inner architecture of the AI.
@@ -30,15 +34,18 @@ package gai;
  * For further info about the architecture of the AI,
  * see {@link http://springrts.com/wiki/AI:GAI the spring Wiki}
  * and {@link http://wiki.github.com/hoijui/springGAI the GAI Wiki}.
- *
- * @author Marcel Hauf <marcel.hauf@googlemail.com>
- * @author Robin Vobruba <hoijui.quaero@gmail.com>
  */
-interface Environment extends AgentEnvironment {
+public interface Environment extends AgentEnvironment {
 
 	/**
 	 * Returns a number that uniquely identifies an <code>Agent</code>
 	 * withing an AI instance.
 	 */
 	TaskQueue getTaskQueue();
+
+	/**
+	 * Incorporates an agent in the Agency identifies an <code>Agent</code>
+	 * withing an AI instance.
+	 */
+	void enrole(Agent agent);
 }

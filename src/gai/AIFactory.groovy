@@ -31,13 +31,36 @@ import com.clan_sy.spring.ai.oo.OOAIFactory;
  * The main entry point of the AI, from the engines point of view.
  * Only a single instance of this class is created, which then initializes
  * all one AI instance per team.
- *
- * @author Marcel Hauf <marcel.hauf@googlemail.com>
- * @author Robin Vobruba <hoijui.quaero@gmail.com>
  */
 public class AIFactory extends OOAIFactory {
 
-	public AIFactory() {}
+	/**
+	 * Can be used for simplistic testing of the AI,
+	 * without having to start the engine.
+	 */
+	public static void main(String[] args) throws Exception {
+
+		AIFactory fac = new AIFactory();
+
+		final int teamId = 0;
+		final OOAICallback callback = null;
+		OOAI ai = fac.createAI(teamId, callback);
+		ai.init(teamId, callback);
+
+		// start update cycle (aprox. 30 frames per second)
+		int frame = 0;
+		boolean running = true;
+		try {
+			while (running) {
+				Thread.sleep(33);
+				//System.out.println("update(frame = ${frame})");
+				ai.update(frame);
+				frame++;
+			}
+		} catch (InterruptedException ex) {
+			System.out.println("InterruptedException");
+		}
+	}
 
 	@Override
 	public OOAI createAI(int teamId, OOAICallback callback) {

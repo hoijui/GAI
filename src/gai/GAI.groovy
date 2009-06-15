@@ -23,6 +23,8 @@
 package gai;
 
 
+import gai.kernel.*;
+
 import com.clan_sy.spring.ai.AICommand;
 import com.clan_sy.spring.ai.AICommandWrapper;
 import com.clan_sy.spring.ai.command.*;
@@ -36,9 +38,6 @@ import com.clan_sy.spring.ai.oo.OOAICallback;
  * This is the main centre of engine -> AI communication.
  * For AI -> engine communication, see
  * {@link com.clan_sy.spring.ai.oo.OOAICallback}.
- *
- * @author Marcel Hauf <marcel.hauf@googlemail.com>
- * @author Robin Vobruba <hoijui.quaero@gmail.com>
  */
 public class GAI extends AbstractOOAI implements OOAI {
 
@@ -47,14 +46,28 @@ public class GAI extends AbstractOOAI implements OOAI {
 
 	private OOAICallback mCallback;
 	private int mTeamID;
+	private Environment mEnv;
 
 	@Override
 	public int init(int teamId, OOAICallback callback) {
 		mTeamID = teamId;
 		mCallback = callback;
 
-		sendMessage("Hello Engine send by GAI, a Groovy Skirmish AI.");
-		setPause(true, "Testing pause");
+		mEnv = new DefaultEnvironment();
+		((DefaultEnvironment)mEnv).setTeamId(teamId);
+		((DefaultEnvironment)mEnv).setCallback(callback);
+		((DefaultEnvironment)mEnv).addTestAgents();
+
+		//sendMessage("Hello Engine! sent by GAI, a Groovy Skirmish AI.");
+		//setPause(true, "Testing pause");
+
+		return SUCCESS;
+	}
+
+	@Override
+	public int update(int frame) {
+
+		((DefaultEnvironment)mEnv).update(frame);
 
 		return SUCCESS;
 	}
@@ -62,9 +75,8 @@ public class GAI extends AbstractOOAI implements OOAI {
 	/**
 	 * Sends a command from the AI to the engine.
 	 */
-	private void handleEngineCommand(AICommand command) {
-		mCallback.getEngine().handleCommand(
-				AICommandWrapper.COMMAND_TO_ID_ENGINE, -1, command);
+	private boolean handleEngineCommand(AICommand command) {
+		return mCallback.getEngine().handleCommand(AICommandWrapper.COMMAND_TO_ID_ENGINE, -1, command) == 0;
 	}
 
 	/**
@@ -73,8 +85,7 @@ public class GAI extends AbstractOOAI implements OOAI {
 	 */
 	private void sendMessage(String message) {
 
-		SendTextMessageAICommand msgCmd =
-				new SendTextMessageAICommand(message, 0);
+		SendTextMessageAICommand msgCmd = new SendTextMessageAICommand(message, 0);
 		handleEngineCommand(msgCmd);
 	}
 
@@ -84,7 +95,7 @@ public class GAI extends AbstractOOAI implements OOAI {
 	private boolean setPause(boolean enable, String reason = "unknown") {
 
 		PauseAICommand cmd = new PauseAICommand(enable, reason);
-		boolean success = (handleEngineCommand(cmd) == 0);
+		boolean success = handleEngineCommand(cmd);
 		return success;
 	}
 }

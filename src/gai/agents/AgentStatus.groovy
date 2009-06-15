@@ -20,16 +20,25 @@
 	along with GAI; If not, see <http://www.gnu.org/licenses/>.
 */
 
-package gai.tasks;
+package gai.agents;
 
 
 /**
- * Specifies the category/type of a <code>Task</code>.
- * This is mainly used to distinguish which <code>Agent</code> is best
- * suited to process a <code>Task</code>.
- * You may think of it as a description in string form, for example
- * "economy" or "attack".
+ * The <code>AgentStatus</code> contains various status info
+ * about an <code>Agent</code>.
  */
-public interface TaskCategory extends Comparable<TaskCategory> {
+public interface AgentStatus {
 
+	/**
+	 * Returns a short description of this status,
+	 * eg "everything ok here", "i need units to command!"
+	 * or "Currently managing 3 attack groups with a total of 44 units".
+	 */
+	String getDescription();
+
+	/**
+	 * Returns true if this agetn is ready to do its thing,
+	 * eg all requirements are met.
+	 */
+	boolean isOperational();
 }

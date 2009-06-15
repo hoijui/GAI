@@ -20,18 +20,33 @@
 	along with GAI; If not, see <http://www.gnu.org/licenses/>.
 */
 
-package gai;
+package gai.agents;
 
+
+import gai.tasks.Task;
+
+import com.clan_sy.spring.ai.oo.OOAICallback;
 
 /**
  * Forms the central point of reference of the architecture of the AI
  * from an <code>Agent</code>s point of view.
  *
- * @author Marcel Hauf <marcel.hauf@googlemail.com>
- * @author Robin Vobruba <hoijui.quaero@gmail.com>
  * @see Environment
  */
-interface AgentEnvironment {
+public interface AgentEnvironment {
+
+	/**
+	 * Returns this AIs team ID, which is assigned to it by the engine,
+	 * and used as a unique identifier for an AI instance.
+	 */
+	int getTeamId();
+
+	/**
+	 * Returns the callback object for communication with the engine.
+	 * CAUTION: This callback may only be used in the main thread,
+	 * which is the one that sends events to the AI.
+	 */
+	OOAICallback getCallback();
 
 	/**
 	 * Schedule a task for processing by (an other) <code>Agent</code>.

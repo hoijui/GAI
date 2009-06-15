@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/lang
+		http://www.springframework.org/schema/lang/spring-lang-2.5.xsd">
+
+
+<!--
+	Document   : beans.xml
+	Created on : June 8, 2009, 3:04 PM
+	Author	 : robin
+	Description:
+		Purpose of the document follows.
+-->
+
+
+<!--
+	Load the Agents as Java .class files.
+	This is faster, but does not allow runtime real-time modification.
+-->
+<!--
+<bean id="agentK"
+           class="gai.agents.impl.AgentK">
+	<property name="id" value="666"/>
+</bean>
+
+<bean id="agentJ"
+           class="gai.agents.impl.AgentJ">
+	<property name="id" value="68"/>
+</bean>
+-->
+
+<!--
+	Load the Agents as Groovy scripts,
+	so they can be modified at runtime.
+-->
+<lang:groovy id="agentK"
+             script-source="classpath:gai/agents/impl/AgentK.groovy">
+	<!--<lang:property name="id" value="666"/>-->
+</lang:groovy>
+
+<lang:groovy id="agentJ"
+             script-source="classpath:gai/agents/impl/AgentJ.groovy"
+             refresh-check-delay="5000">
+	<!--<lang:property name="id" value="69"/>-->
+</lang:groovy>
+
+
+<!--
+	Load the Agents from Ruby scripts.
+-->
+<lang:jruby id="rubyAgent"
+            script-interfaces="gai.agents.Agent"
+            script-source="classpath:RubyAgent.rb">
+	<!--<lang:property name="id" value="33"/>-->
+</lang:jruby>
+
+
+<!--
+	Load the Agents from Bean-Shell scripts.
+-->
+<lang:bsh id="bshAgent"
+          script-source="classpath:BshAgent.bsh"
+          script-interfaces="gai.agents.Agent">
+	<!--<lang:property name="id" value="44"/>-->
+</lang:bsh>
+
+</beans>

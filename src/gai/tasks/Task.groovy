@@ -20,18 +20,15 @@
 	along with GAI; If not, see <http://www.gnu.org/licenses/>.
 */
 
-package gai;
+package gai.tasks;
 
 
 /**
  * A <code>Task</code> represents an unit of work
  * that is requested scheduled by one <code>Agent</code>,
  * and processed by an other.
- *
- * @author Marcel Hauf <marcel.hauf@googlemail.com>
- * @author Robin Vobruba <hoijui.quaero@gmail.com>
  */
-interface Task {
+public interface Task {
 
 	// relevant for scheduling:
 

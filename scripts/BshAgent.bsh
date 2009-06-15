@@ -1,0 +1,52 @@
+
+import gai.agents.AgentStatus;
+import gai.agents.AgentEnvironment;
+
+private static final String NAME = "Bean-Shell script prototype";
+private static final String DESCRIPTION = "no nothing, stay operational";
+
+private AgentEnvironment env = null;
+
+private AgentStatus status = new AgentStatus() {
+		public String getDescription() {
+			return "doing nothing";
+		}
+		public boolean isOperational() {
+			return true;
+		}
+	};
+
+/* (non-Javadoc)
+ * @see gai.agents.Agent#getName()
+ */
+public String getName() {
+	return NAME;
+}
+
+/* (non-Javadoc)
+ * @see gai.agents.Agent#getDescription()
+ */
+public String getDescription() {
+	return DESCRIPTION;
+}
+
+/* (non-Javadoc)
+ * @see gai.agents.Agent#getStatus()
+ */
+public AgentStatus getStatus() {
+	return status;
+}
+
+/* (non-Javadoc)
+ * @see gai.agents.Agent#engage(gai.agents.AgentEnvironment)
+ */
+public void engage(AgentEnvironment environment) {
+	env = environment;
+}
+
+/* (non-Javadoc)
+ * @see gai.agents.Agent#disengage()
+ */
+public void disengage() {
+	// TODO Auto-generated method stub
+}

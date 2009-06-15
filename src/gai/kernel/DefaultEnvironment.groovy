@@ -67,6 +67,16 @@ public class DefaultEnvironment implements Environment {
 
 	private void loadContext() {
 
+		// TODO FIXME: ClassLoader issue!!
+		// Without this line, JRuby and BeanShell scripts can not be loaded
+		// through the spring framework.
+		// But this line will probably cause problems when our AI is used
+		// together with other AI implementations that rely on the context
+		// class loader as well, if they have to use a similar hack.
+		ClassLoader originalContextClassLoader =
+				Thread.currentThread().getContextClassLoader();
+		Thread.currentThread().setContextClassLoader(MY_CLASS_LOADER);
+
 		Resource res_beans_xml   = new ClassPathResource("beans.xml", MY_CLASS_LOADER);
 		Resource res_beans_props = new ClassPathResource("beans.properties", MY_CLASS_LOADER);
 
@@ -89,14 +99,20 @@ public class DefaultEnvironment implements Environment {
 		}
 		ctx.refresh();
 
+		// reset the original CL, to try to prevent crashing with
+		// other Java AI implementaitons
+		Thread.currentThread().setContextClassLoader(originalContextClassLoader);
+
 		mContext = ctx;
 	}
 
 	void update(int frame) {
 
-		System.out.println("Stati for frame ${frame}:");
-		for (Agent agent : mAgents) {
-			System.out.println("Agent ${agent.getName()}: ${agent.getStatus().getDescription()}");
+		if ((frame % (10 * 30)) == 0) {
+			System.out.println("Stati for frame ${frame}:");
+			for (Agent agent : mAgents) {
+				System.out.println("Agent ${agent.getName()}: ${agent.getStatus().getDescription()}");
+			}
 		}
 	}
 

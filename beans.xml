@@ -56,7 +56,6 @@
 <lang:jruby id="rubyAgent"
             script-interfaces="gai.agents.Agent"
             script-source="classpath:RubyAgent.rb">
-	<!--<lang:property name="id" value="33"/>-->
 </lang:jruby>
 
 
@@ -66,7 +65,6 @@
 <lang:bsh id="bshAgent"
           script-source="classpath:BshAgent.bsh"
           script-interfaces="gai.agents.Agent">
-	<!--<lang:property name="id" value="44"/>-->
 </lang:bsh>
 
 </beans>

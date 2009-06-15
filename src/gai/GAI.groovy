@@ -25,6 +25,8 @@ package gai;
 
 import gai.kernel.*;
 
+import org.apache.commons.logging.*;
+
 import com.clan_sy.spring.ai.AICommand;
 import com.clan_sy.spring.ai.AICommandWrapper;
 import com.clan_sy.spring.ai.command.*;
@@ -44,6 +46,8 @@ public class GAI extends AbstractOOAI implements OOAI {
 	private static final int SUCCESS   = 0;
 	private static final int FAILURE_X = 1;
 
+    private static Log log = LogFactory.getLog(GAI.class);
+
 	private OOAICallback mCallback;
 	private int mTeamID;
 	private Environment mEnv;
@@ -53,10 +57,16 @@ public class GAI extends AbstractOOAI implements OOAI {
 		mTeamID = teamId;
 		mCallback = callback;
 
-		mEnv = new DefaultEnvironment();
-		((DefaultEnvironment)mEnv).setTeamId(teamId);
-		((DefaultEnvironment)mEnv).setCallback(callback);
-		((DefaultEnvironment)mEnv).addTestAgents();
+		try {
+			mEnv = new DefaultEnvironment();
+			((DefaultEnvironment)mEnv).setTeamId(teamId);
+			((DefaultEnvironment)mEnv).setCallback(callback);
+			((DefaultEnvironment)mEnv).addTestAgents();
+		} catch (Exception ex) {
+			log.error("Failed initializing DefaultEnvironment", ex)
+			mEnv = null;
+			return FAILURE_X;
+		}
 
 		//sendMessage("Hello Engine! sent by GAI, a Groovy Skirmish AI.");
 		//setPause(true, "Testing pause");

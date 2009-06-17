@@ -58,6 +58,7 @@ public class GAI extends AbstractOOAI implements OOAI {
 		mCallback = callback;
 
 		try {
+			BeanContainer beanContainer = new BeanContainer();
 			mEnv = new DefaultEnvironment();
 			((DefaultEnvironment)mEnv).setTeamId(teamId);
 			((DefaultEnvironment)mEnv).setCallback(callback);

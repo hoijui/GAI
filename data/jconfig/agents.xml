@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Document   : agents.xml
+	Created on : June 8, 2009, 3:04 PM
+	Author     : Robin Vobruba <hoijui.quaero@gmail.com>
+	Description:
+		Purpose of the document follows.
+-->
+
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:lang="http://www.springframework.org/schema/lang"
@@ -7,15 +16,6 @@
 		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 		http://www.springframework.org/schema/lang
 		http://www.springframework.org/schema/lang/spring-lang-2.5.xsd">
-
-
-<!--
-	Document   : beans.xml
-	Created on : June 8, 2009, 3:04 PM
-	Author	 : robin
-	Description:
-		Purpose of the document follows.
--->
 
 
 <!--

@@ -44,66 +44,26 @@ import java.util.PriorityQueue;
 
 /**
  * Default implementaiton of <code>Environment</code>.
- * @see gai.agents.AgentEnvironment#getCallback()
  */
 public class DefaultEnvironment implements Environment {
 
 	public static final ClassLoader MY_CLASS_LOADER = DefaultEnvironment.class.getClassLoader();
     private static Log log = LogFactory.getLog(DefaultEnvironment.class);
 
-	private ApplicationContext mContext;
+	private BeanContainer mBeans;
 	private int mTeamId;
 	private OOAICallback mCallback;
 	private Set<Agent> mAgents;
 	private TaskQueue mTaskQueue;
 
-	public DefaultEnvironment() {
+	public void init(BeanContainer beans) {
 
 		mAgents = new HashSet<Agent>();
-		mTaskQueue = {new PriorityQueue<Task>()} as TaskQueue;
+		mTaskQueue = { new PriorityQueue<Task>() } as TaskQueue;
 
-		loadContext();
-	}
-
-	private void loadContext() {
-
-		// TODO FIXME: ClassLoader issue!!
-		// Without this line, JRuby and BeanShell scripts can not be loaded
-		// through the spring framework.
-		// But this line will probably cause problems when our AI is used
-		// together with other AI implementations that rely on the context
-		// class loader as well, if they have to use a similar hack.
-		ClassLoader originalContextClassLoader =
-				Thread.currentThread().getContextClassLoader();
-		Thread.currentThread().setContextClassLoader(MY_CLASS_LOADER);
-
-		Resource res_beans_xml   = new ClassPathResource("beans.xml", MY_CLASS_LOADER);
-		Resource res_beans_props = new ClassPathResource("beans.properties", MY_CLASS_LOADER);
-
-		GenericApplicationContext ctx = new GenericApplicationContext();
-		ctx.setClassLoader(MY_CLASS_LOADER);
-
-		if (res_beans_xml.exists()) {
-			XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(ctx);
-			xmlReader.loadBeanDefinitions(res_beans_xml);
-			if (log.isDebugEnabled()) {
-                log.debug("Loaded context from " + res_beans_xml);
-            }
-		}
-		if (res_beans_props.exists()) {
-			PropertiesBeanDefinitionReader propReader = new PropertiesBeanDefinitionReader(ctx);
-			propReader.loadBeanDefinitions(res_beans_props);
-			if (log.isDebugEnabled()) {
-                log.debug("Loaded context from " + res_beans_props);
-            }
-		}
-		ctx.refresh();
-
-		// reset the original CL, to try to prevent crashing with
-		// other Java AI implementaitons
-		Thread.currentThread().setContextClassLoader(originalContextClassLoader);
-
-		mContext = ctx;
+		mBeans = new BeanContainer();
+		mBeans.initContext();
+		mBeans.setupContext();
 	}
 
 	void update(int frame) {
@@ -118,10 +78,10 @@ public class DefaultEnvironment implements Environment {
 
 	public void addTestAgents() {
 
-		Agent agentK    = (Agent) mContext.getBean("agentK");
-		Agent agentJ    = (Agent) mContext.getBean("agentJ");
-		Agent agentRuby = (Agent) mContext.getBean("rubyAgent");
-		Agent agentBsh  = (Agent) mContext.getBean("bshAgent");
+		Agent agentK    = (Agent) mBeans.getBean("agentK");
+		Agent agentJ    = (Agent) mBeans.getBean("agentJ");
+		Agent agentRuby = (Agent) mBeans.getBean("rubyAgent");
+		Agent agentBsh  = (Agent) mBeans.getBean("bshAgent");
 
 		this.enrole(agentK);
 		this.enrole(agentJ);

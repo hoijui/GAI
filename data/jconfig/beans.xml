@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Document   : beans.xml
+	Created on : June 8, 2009, 3:04 PM
+	Author     : Robin Vobruba <hoijui.quaero@gmail.com>
+	Description:
+		Purpose of the document follows.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+<!--
+<bean id="logFactory" class="org.apache.commons.logging.LogFactory">
+</bean>
+
+<bean id="logger" class="org.springframework.beans.factory.config.CommonsLogFactoryBean">
+	<property name="logName" value="log"/>
+</bean>
+-->
+
+<import resource="agents.xml"/>
+
+</beans>

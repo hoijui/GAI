@@ -43,12 +43,11 @@ import java.util.HashSet;
 import java.util.PriorityQueue;
 
 /**
- * Default implementaiton of <code>Environment</code>.
+ * Default implementation of <code>Environment</code>.
  */
 public class DefaultEnvironment implements Environment {
 
 	public static final ClassLoader MY_CLASS_LOADER = DefaultEnvironment.class.getClassLoader();
-    private static Log log = LogFactory.getLog(DefaultEnvironment.class);
 
 	private BeanContainer mBeans;
 	private int mTeamId;
@@ -56,24 +55,37 @@ public class DefaultEnvironment implements Environment {
 	private Set<Agent> mAgents;
 	private TaskQueue mTaskQueue;
 
-	public void init(BeanContainer beans) {
+    private Log log = LogFactory.getLog(DefaultEnvironment.class);
+
+	@Override
+	public void init(BeanContainer beans, int teamId, OOAICallback callback) {
+		mBeans = beans;
+		mTeamId = teamId;
+		mCallback = callback;
 
 		mAgents = new HashSet<Agent>();
-		mTaskQueue = { new PriorityQueue<Task>() } as TaskQueue;
-
-		mBeans = new BeanContainer();
-		mBeans.initContext();
-		mBeans.setupContext();
+		// mTaskQueue is set through the spring framework
+		//mTaskQueue = { new PriorityQueue<Task>() } as TaskQueue;
+		//mTaskQueue = (TaskQueue) mBeans.getBean("taskQueue");
 	}
 
-	void update(int frame) {
+	@Override
+	public int handleEvent(Object engineEvent) {
 
-		if ((frame % (10 * 30)) == 0) {
-			System.out.println("Stati for frame ${frame}:");
-			for (Agent agent : mAgents) {
-				System.out.println("Agent ${agent.getName()}: ${agent.getStatus().getDescription()}");
+		// TODO FIXME big haxors!
+		if (engineEvent instanceof Integer) {
+			// assume it is an update event
+			int frame = ((Integer)engineEvent).intValue();
+			if ((frame % (10 * 30)) == 0) {
+				System.out.printf("Stati for frame %d\n", frame);
+				for (Agent agent : mAgents) {
+					System.out.printf("\tAgent %30s: %s\n",
+							agent.getName(), agent.getStatus().getDescription());
+				}
 			}
 		}
+		
+		return 0;
 	}
 
 	public void addTestAgents() {
@@ -97,9 +109,9 @@ public class DefaultEnvironment implements Environment {
 	public OOAICallback getCallback() {
 		return mCallback;
 	}
-	public void setCallback(OOAICallback callback) {
+	/*public void setCallback(OOAICallback callback) {
 		mCallback = callback;
-	}
+	}*/
 
 	/* (non-Javadoc)
 	 * @see gai.agents.AgentEnvironment#getCallback()
@@ -107,9 +119,9 @@ public class DefaultEnvironment implements Environment {
 	public int getTeamId() {
 		return mTeamId;
 	}
-	public void setTeamId(int teamId) {
+	/*public void setTeamId(int teamId) {
 		mTeamId = teamId;
-	}
+	}*/
 
 	/* (non-Javadoc)
 	 * @see gai.agents.AgentEnvironment#scheduleTask(Task task)
@@ -123,6 +135,9 @@ public class DefaultEnvironment implements Environment {
 	 */
 	public TaskQueue getTaskQueue() {
 		return mTaskQueue;
+	}
+	public void setTaskQueue(TaskQueue taskQueue) {
+		mTaskQueue = taskQueue;
 	}
 
 	/* (non-Javadoc)

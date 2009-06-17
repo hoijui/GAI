@@ -29,7 +29,7 @@ import gai.tasks.TaskQueue;
 import java.util.PriorityQueue;
 
 /**
- * Default implementaiton of <code>TaskQueue</code>.
+ * Default implementation of <code>TaskQueue</code>.
  */
 public class DefaultTaskQueue extends PriorityQueue<Task> implements TaskQueue {
 

@@ -46,25 +46,24 @@ public class GAI extends AbstractOOAI implements OOAI {
 	private static final int SUCCESS   = 0;
 	private static final int FAILURE_X = 1;
 
-    private static Log log = LogFactory.getLog(GAI.class);
-
-	private OOAICallback mCallback;
-	private int mTeamID;
+    private Log log = LogFactory.getLog(GAI.class);
 	private Environment mEnv;
 
 	@Override
 	public int init(int teamId, OOAICallback callback) {
-		mTeamID = teamId;
-		mCallback = callback;
 
 		try {
-			BeanContainer beanContainer = new BeanContainer();
-			mEnv = new DefaultEnvironment();
-			((DefaultEnvironment)mEnv).setTeamId(teamId);
-			((DefaultEnvironment)mEnv).setCallback(callback);
+			BeanContainer beans = BeanContainer.getInstance();
+			beans.initContext();
+			beans.setupContext();
+
+			mEnv = (Environment) beans.getBean("environment");
+			mEnv.init(beans, teamId, callback);
+			
+			// TODO FIXME haxors!
 			((DefaultEnvironment)mEnv).addTestAgents();
 		} catch (Exception ex) {
-			log.error("Failed initializing DefaultEnvironment", ex)
+			log.error("Failed initializing DefaultEnvironment", ex);
 			mEnv = null;
 			return FAILURE_X;
 		}
@@ -78,7 +77,7 @@ public class GAI extends AbstractOOAI implements OOAI {
 	@Override
 	public int update(int frame) {
 
-		((DefaultEnvironment)mEnv).update(frame);
+		mEnv.handleEvent(frame);
 
 		return SUCCESS;
 	}
@@ -87,7 +86,7 @@ public class GAI extends AbstractOOAI implements OOAI {
 	 * Sends a command from the AI to the engine.
 	 */
 	private boolean handleEngineCommand(AICommand command) {
-		return mCallback.getEngine().handleCommand(AICommandWrapper.COMMAND_TO_ID_ENGINE, -1, command) == 0;
+		return mEnv.getCallback().getEngine().handleCommand(AICommandWrapper.COMMAND_TO_ID_ENGINE, -1, command) == 0;
 	}
 
 	/**
@@ -103,10 +102,13 @@ public class GAI extends AbstractOOAI implements OOAI {
 	/**
 	 * Pauses or unpauses the game.
 	 */
-	private boolean setPause(boolean enable, String reason = "unknown") {
+	private boolean setPause(boolean enable, String reason) {
 
 		PauseAICommand cmd = new PauseAICommand(enable, reason);
 		boolean success = handleEngineCommand(cmd);
 		return success;
+	}
+	private boolean setPause(boolean enable) {
+		return setPause(enable, "unknown");
 	}
 }

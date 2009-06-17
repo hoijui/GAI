@@ -25,7 +25,6 @@ package gai.kernel;
 
 import org.apache.commons.logging.*;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.beans.factory.support.StaticListableBeanFactory;
@@ -44,13 +43,16 @@ public class BeanContainer extends StaticApplicationContext {
 	public static final ClassLoader MY_CLASS_LOADER = DefaultEnvironment.class.getClassLoader();
     private static Log log = LogFactory.getLog("gai");
 
+	// allows adding beans programmatically
 	private StaticListableBeanFactory mProgBeanList = null;
-	//private GenericApplicationContext mContext = null;
 
-	public BeanContainer() {
+	private BeanContainer(StaticListableBeanFactory progBeanList) {
+		super(new GenericApplicationContext(new DefaultListableBeanFactory(progBeanList)));
+		mProgBeanList = progBeanList;
+	}
 
-		initContext();
-		setupContext();
+	public static BeanContainer getInstance() {
+		return new BeanContainer(new StaticListableBeanFactory());
 	}
 
 	public void initContext() {
@@ -67,16 +69,7 @@ public class BeanContainer extends StaticApplicationContext {
 
 		Resource res_beans_xml   = new ClassPathResource("beans.xml", MY_CLASS_LOADER);
 		Resource res_beans_props = new ClassPathResource("beans.properties", MY_CLASS_LOADER);
-		
-		// allows adding beans programmatically
-		mProgBeanList = new StaticListableBeanFactory();
-		mProgBeanList.addBean("classLoader", MY_CLASS_LOADER);
 
-		// main context
-		GenericApplicationContext parent =
-				new GenericApplicationContext(
-					new DefaultListableBeanFactory(mProgBeanList));
-		this.setParent(parent);
 		this.setClassLoader(MY_CLASS_LOADER);
 
 		if (res_beans_xml.exists()) {
@@ -86,6 +79,7 @@ public class BeanContainer extends StaticApplicationContext {
                 log.info("Loaded context from " + res_beans_xml);
             }
 		}
+		System.out.println("beans.properties found? " + res_beans_props.exists());
 		if (res_beans_props.exists()) {
 			PropertiesBeanDefinitionReader propReader = new PropertiesBeanDefinitionReader(this);
 			propReader.loadBeanDefinitions(res_beans_props);
@@ -93,6 +87,7 @@ public class BeanContainer extends StaticApplicationContext {
                 log.info("Loaded context from " + res_beans_props);
             }
 		}
+		((GenericApplicationContext)this.getParent()).refresh();
 		this.refresh();
 
 		// reset the original CL, to try to prevent crashing with

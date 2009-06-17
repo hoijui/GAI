@@ -45,11 +45,11 @@ public class AIFactory extends OOAIFactory {
 		final int teamId = 0;
 		final OOAICallback callback = null;
 		OOAI ai = fac.createAI(teamId, callback);
-		ai.init(teamId, callback);
+		int error = ai.init(teamId, callback);
 
 		// start update cycle (aprox. 30 frames per second)
 		int frame = 0;
-		boolean running = true;
+		boolean running = (error == 0);
 		try {
 			while (running) {
 				Thread.sleep(33);

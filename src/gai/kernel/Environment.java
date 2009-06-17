@@ -23,13 +23,15 @@
 package gai.kernel;
 
 
+import com.clan_sy.spring.ai.oo.OOAICallback;
+
 import gai.agents.Agent;
 import gai.agents.AgentEnvironment;
 import gai.tasks.TaskQueue;
 
 /**
  * Central point of reference of the inner architecture of the AI.
- * All globaly important parts of the AI are referenced.
+ * All globally important parts of the AI are referenced.
  * So this can be seen as the skeleton of the (micro-)kernel.
  * For further info about the architecture of the AI,
  * see {@link http://springrts.com/wiki/AI:GAI the spring Wiki}
@@ -38,14 +40,25 @@ import gai.tasks.TaskQueue;
 public interface Environment extends AgentEnvironment {
 
 	/**
+	 * Initializes this environment with a complete AI instance specific context.
+	 */
+	void init(BeanContainer beans, int teamId, OOAICallback callback);
+
+	/**
 	 * Returns a number that uniquely identifies an <code>Agent</code>
-	 * withing an AI instance.
+	 * within an AI instance.
 	 */
 	TaskQueue getTaskQueue();
 
 	/**
 	 * Incorporates an agent in the Agency identifies an <code>Agent</code>
-	 * withing an AI instance.
+	 * within an AI instance.
 	 */
 	void enrole(Agent agent);
+
+	/**
+	 * Updates the environment.
+	 * This is the AIs main handleEvent method, that distributes to all sub parts.
+	 */
+	int handleEvent(Object engineEvent);
 }

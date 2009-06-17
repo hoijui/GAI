@@ -54,11 +54,14 @@
 	<path id="class.path.base">
 		<fileset dir="data">
 			<include name="${java.lib.dir}/**/*.jar"/>
-			<include name="${java.script.dir}"/>
 			<include name="${java.script.dir}/**/*.jar"/>
-			<include name="${java.config.dir}"/>
 			<include name="${java.config.dir}/**/*.jar"/>
 		</fileset>
+		<dirset dir="data">
+			<include name="${java.lib.dir}"/>
+			<include name="${java.script.dir}"/>
+			<include name="${java.config.dir}"/>
+		</dirset>
 	</path>
 
 

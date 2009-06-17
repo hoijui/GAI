@@ -14,14 +14,12 @@
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-<!--
-<bean id="logFactory" class="org.apache.commons.logging.LogFactory">
+<bean id="taskQueue" class="gai.tasks.DefaultTaskQueue">
 </bean>
 
-<bean id="logger" class="org.springframework.beans.factory.config.CommonsLogFactoryBean">
-	<property name="logName" value="log"/>
+<bean id="environment" class="gai.kernel.DefaultEnvironment">
+	<property name="taskQueue" ref="taskQueue"/>
 </bean>
--->
 
 <import resource="agents.xml"/>
 

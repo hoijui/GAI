@@ -41,7 +41,7 @@ public interface Agent {
 	String getName();
 
 	/**
-	 * Returns a descriptiong of this <code>Agent</code>, its abilities
+	 * Returns a description of this <code>Agent</code>, its abilities
 	 * and environmental requirements. Example:
 	 * "This Agent is able to manage small groups of warfare units in active combat." \
 	 * "For this to work, he needs Agents that create and assemble combat groups," \
@@ -50,7 +50,7 @@ public interface Agent {
 	String getDescription();
 
 	/**
-	 * Returns a descriptiong of this <code>Agent</code>, its abilities
+	 * Returns a description of this <code>Agent</code>, its abilities
 	 * and environmental requirements. Example:
 	 * "This Agent is able to manage small groups of warfare units in active combat." \
 	 * "For this to work, he needs Agents that create and assemble combat groups," \

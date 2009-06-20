@@ -23,6 +23,8 @@
 package gai.kernel;
 
 
+import java.util.Set;
+
 import com.clan_sy.spring.ai.oo.OOAICallback;
 
 import gai.agents.Agent;
@@ -51,10 +53,20 @@ public interface Environment extends AgentEnvironment {
 	TaskQueue getTaskQueue();
 
 	/**
-	 * Incorporates an agent in the Agency identifies an <code>Agent</code>
-	 * within an AI instance.
+	 * Incorporates an <code>Agent</code> in the agency.
 	 */
 	void enrole(Agent agent);
+
+	/**
+	 * Removes an <code>Agent</code> from the agency,
+	 * which means it will not get any more tasks.
+	 */
+	void dismiss(Agent agent);
+
+	/**
+	 * Enrolls the new agents after removing all current ones.
+	 */
+	void setAgents(Set<Agent> agents);
 
 	/**
 	 * Updates the environment.

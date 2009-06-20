@@ -59,9 +59,6 @@ public class GAI extends AbstractOOAI implements OOAI {
 
 			mEnv = (Environment) beans.getBean("environment");
 			mEnv.init(beans, teamId, callback);
-			
-			// TODO FIXME haxors!
-			((DefaultEnvironment)mEnv).addTestAgents();
 		} catch (Exception ex) {
 			log.error("Failed initializing DefaultEnvironment", ex);
 			mEnv = null;

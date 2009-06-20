@@ -52,10 +52,12 @@ public class DefaultEnvironment implements Environment {
 	private BeanContainer mBeans;
 	private int mTeamId;
 	private OOAICallback mCallback;
-	private Set<Agent> mAgents;
+	private Set<Agent> mAgents = new HashSet<Agent>();
 	private TaskQueue mTaskQueue;
+	private boolean mInitialized = false;
 
     private Log log = LogFactory.getLog(DefaultEnvironment.class);
+
 
 	@Override
 	public void init(BeanContainer beans, int teamId, OOAICallback callback) {
@@ -63,10 +65,21 @@ public class DefaultEnvironment implements Environment {
 		mTeamId = teamId;
 		mCallback = callback;
 
-		mAgents = new HashSet<Agent>();
 		// mTaskQueue is set through the spring framework
 		//mTaskQueue = { new PriorityQueue<Task>() } as TaskQueue;
 		//mTaskQueue = (TaskQueue) mBeans.getBean("taskQueue");
+
+		// disengage agents from the old agency
+		if (mInitialized) {
+			for (Agent agent : mAgents) {
+				agent.disengage();
+			}
+		}
+		mInitialized = true;
+		// (re-)engage agents with the new agency
+		for (Agent agent : mAgents) {
+			agent.engage(this);
+		}
 	}
 
 	@Override
@@ -88,24 +101,12 @@ public class DefaultEnvironment implements Environment {
 		return 0;
 	}
 
-	public void addTestAgents() {
-
-		Agent agentK    = (Agent) mBeans.getBean("agentK");
-		Agent agentJ    = (Agent) mBeans.getBean("agentJ");
-		Agent agentRuby = (Agent) mBeans.getBean("rubyAgent");
-		Agent agentBsh  = (Agent) mBeans.getBean("bshAgent");
-
-		this.enrole(agentK);
-		this.enrole(agentJ);
-		this.enrole(agentRuby);
-		this.enrole(agentBsh);
-	}
-
 
 
 	/* (non-Javadoc)
 	 * @see gai.agents.AgentEnvironment#getCallback()
 	 */
+	@Override
 	public OOAICallback getCallback() {
 		return mCallback;
 	}
@@ -116,6 +117,7 @@ public class DefaultEnvironment implements Environment {
 	/* (non-Javadoc)
 	 * @see gai.agents.AgentEnvironment#getCallback()
 	 */
+	@Override
 	public int getTeamId() {
 		return mTeamId;
 	}
@@ -126,6 +128,7 @@ public class DefaultEnvironment implements Environment {
 	/* (non-Javadoc)
 	 * @see gai.agents.AgentEnvironment#scheduleTask(Task task)
 	 */
+	@Override
 	public void scheduleTask(Task task) {
 		mTaskQueue.add(task);
 	}
@@ -133,6 +136,7 @@ public class DefaultEnvironment implements Environment {
 	/* (non-Javadoc)
 	 * @see gai.kernel.Environment#getTaskQueue()
 	 */
+	@Override
 	public TaskQueue getTaskQueue() {
 		return mTaskQueue;
 	}
@@ -143,9 +147,45 @@ public class DefaultEnvironment implements Environment {
 	/* (non-Javadoc)
 	 * @see gai.kernel.Environment#enrole(Agent agent)
 	 */
+	@Override
 	public void enrole(Agent agent) {
 
 		mAgents.add(agent);
-		agent.engage(this);
+		if (mInitialized) {
+			agent.engage(this);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see gai.kernel.Environment#dismiss(Agent agent)
+	 */
+	@Override
+	public void dismiss(Agent agent) {
+
+		if (mInitialized) {
+			agent.disengage();
+		}
+		mAgents.remove(agent);
+	}
+	/**
+	 * Dismisses all agents currently enrolled in this agency.
+	 */
+	public void dismissAgents() {
+
+		for (Agent agent : mAgents) {
+			dismiss(agent);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see gai.kernel.Environment#setAgents(Set<Agent> agents)
+	 */
+	@Override
+	public void setAgents(Set<Agent> agents) {
+
+		dismissAgents();
+		for (Agent agent : agents) {
+			enrole(agent);
+		}
 	}
 }

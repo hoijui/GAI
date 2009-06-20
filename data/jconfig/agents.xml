@@ -67,4 +67,17 @@
           script-interfaces="gai.agents.Agent">
 </lang:bsh>
 
+
+
+<bean id="environmentBaseTestAgents" abstract="true" class="gai.kernel.Environment">
+	<property name="agents">
+		<set>
+			<ref local="agentK"/>
+			<ref local="agentJ"/>
+			<ref local="rubyAgent"/>
+			<ref local="bshAgent"/>
+		</set>
+	</property>
+</bean>
+
 </beans>

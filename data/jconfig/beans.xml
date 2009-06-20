@@ -14,13 +14,25 @@
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
+
+<import resource="agents.xml"/>
+
+
 <bean id="taskQueue" class="gai.tasks.DefaultTaskQueue">
 </bean>
 
-<bean id="environment" class="gai.kernel.DefaultEnvironment">
+
+
+<bean id="environmentBase" abstract="true"
+		class="gai.kernel.Environment"
+		parent="environmentBaseTestAgents">
 	<property name="taskQueue" ref="taskQueue"/>
 </bean>
 
-<import resource="agents.xml"/>
+<bean id="environment"
+		class="gai.kernel.DefaultEnvironment"
+		parent="environmentBase">
+</bean>
+
 
 </beans>

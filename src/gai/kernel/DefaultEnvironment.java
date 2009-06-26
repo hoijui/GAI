@@ -90,10 +90,13 @@ public class DefaultEnvironment implements Environment {
 			// assume it is an update event
 			int frame = ((Integer)engineEvent).intValue();
 			if ((frame % (10 * 30)) == 0) {
-				System.out.printf("Stati for frame %d\n", frame);
+				System.out.printf("Agent Stati for frame %d\n", frame);
+				System.out.printf(" %10s   %40s   %s\n",
+						"[Name]", "[Description]", "[Status.Description]");
 				for (Agent agent : mAgents) {
-					System.out.printf("\tAgent %30s: %s\n",
-							agent.getName(), agent.getStatus().getDescription());
+					System.out.printf(" %10s | %40s | %s\n",
+							agent.getName(), agent.getDescription(),
+							agent.getStatus().getDescription());
 				}
 			}
 		}

@@ -7,7 +7,7 @@ include_class 'gai.agents.AgentStatus'
 class RubyAgent
 	include Agent
 
-	NAME = "JRuby prototype"
+	NAME = "JRuby"
 	DESCRIPTION = "sprinkling scripty beauty, nothing more"
 	@@status = AgentStatus.new
 	def @@status.getDescription

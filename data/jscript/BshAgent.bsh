@@ -2,7 +2,7 @@
 import gai.agents.AgentStatus;
 import gai.agents.AgentEnvironment;
 
-private static final String NAME = "Bean-Shell script prototype";
+private static final String NAME = "Bean-Shell";
 private static final String DESCRIPTION = "no nothing, stay operational";
 
 private AgentEnvironment env = null;

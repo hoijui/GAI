@@ -184,6 +184,8 @@ Please specify either main.class, for example:
 				<pathelement location="${dist.dir}/${jar.file.name.bin}"/>
 				<path refid="class.path.id"/>
 			</classpath>
+			<sysproperty key="java.security.manager" value=""/>
+			<sysproperty key="java.security.policy" value="${ai.interface.src.home}/data/java.policy"/>
 		</java>
 	</target>
 

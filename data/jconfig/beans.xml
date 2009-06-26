@@ -17,6 +17,29 @@
 
 <import resource="agents.xml"/>
 
+<!--
+	Java Management Extensions (JMX)
+	Allows inspection and manipulation of parts (MBeans) of an application
+	at runntime.
+-->
+<!-- This is not needed, as Java 5+ comes with a default JMX setup
+<bean id="mBeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean"/>
+-->
+<!-- This bean must not be lazily initialized if the exporting is to happen -->
+<bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+	<property name="beans">
+		<map>
+			<entry key="bean:name=agentK1" value-ref="agentK"/>
+			<entry key="bean:name=agentJ1" value-ref="agentJ"/>
+			<entry key="bean:name=rubyAgent1" value-ref="rubyAgent"/>
+			<entry key="bean:name=bshAgent1" value-ref="bshAgent"/>
+		</map>
+	</property>
+	<!-- This is not needed, as Java 5+ comes with a default JMX setup
+	<property name="server" ref="mBeanServer"/>
+	-->
+</bean>
+
 
 <bean id="taskQueue" class="gai.tasks.DefaultTaskQueue">
 </bean>

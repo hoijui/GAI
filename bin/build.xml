@@ -184,8 +184,12 @@ Please specify either main.class, for example:
 				<pathelement location="${dist.dir}/${jar.file.name.bin}"/>
 				<path refid="class.path.id"/>
 			</classpath>
-			<sysproperty key="java.security.manager" value=""/>
+			<sysproperty key="java.security.manager" value="true"/>
 			<sysproperty key="java.security.policy" value="${ai.interface.src.home}/data/java.policy"/>
+			<sysproperty key="com.sun.management.jmxremote" value="true"/>
+			<sysproperty key="com.sun.management.jmxremote.port" value="9999"/>
+			<sysproperty key="com.sun.management.jmxremote.authenticate" value="false"/>
+			<sysproperty key="com.sun.management.jmxremote.ssl" value="false"/>
 		</java>
 	</target>
 

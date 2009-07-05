@@ -25,6 +25,7 @@ package gai.agents.impl;
 
 import gai.agents.Agent;
 import gai.agents.AgentStatus;
+import gai.agents.DefaultAgentStatus;
 import gai.agents.AgentEnvironment;
 
 
@@ -39,9 +40,12 @@ public class AgentJ implements Agent {
 
 	public AgentJ() {
 
-		def desc = {"missing guns"};
-		def oper = {false};
-		mStatus = ["getDescription":desc, "isOperational":oper] as AgentStatus;
+		//def desc = {"missing guns"};
+		//def oper = {false};
+		//mStatus = ["getDescription":desc, "isOperational":oper] as AgentStatus;
+		mStatus = new DefaultAgentStatus();
+		mStatus.setDescription("missing guns");
+		mStatus.setOperational(false);
 	}
 
 
@@ -53,12 +57,16 @@ public class AgentJ implements Agent {
 		return NAME;
 	}
 
+	private String mDescription = "<uninitialized>";
 	/* (non-Javadoc)
 	 * @see gai.agents.Agent#getDescription()
 	 */
 	@Override
 	public String getDescription() {
-		return DESCRIPTION;
+		return mDescription;
+	}
+	public void setDescription(String description) {
+		mDescription = description;
 	}
 
 	/* (non-Javadoc)

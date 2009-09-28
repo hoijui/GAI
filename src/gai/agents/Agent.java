@@ -23,6 +23,8 @@
 package gai.agents;
 
 
+import java.io.Serializable;
+
 /**
  * An <code>Agent</code> is a work horse.
  * It is responsible for processing <code>Task</code>s and will often be
@@ -32,7 +34,7 @@ package gai.agents;
  * see {@link http://springrts.com/wiki/AI:GAI the spring Wiki}
  * and {@link http://wiki.github.com/hoijui/springGAI the GAI Wiki}.
  */
-public interface Agent {
+public interface Agent extends Serializable {
 
 	/**
 	 * Returns short and catchy name for this <code>Agent</code>,

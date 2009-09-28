@@ -23,24 +23,36 @@
 package gai.agents;
 
 
-import java.io.Serializable;
-
 /**
- * The <code>AgentStatus</code> contains various status info
- * about an <code>Agent</code>.
+ * Default implementation of <code>AgentStatus</code>.
  */
-public interface AgentStatus extends Serializable {
+public class DefaultAgentStatus implements AgentStatus {
 
-	/**
-	 * Returns a short description of this status,
-	 * eg. "everything OK here", "i need units to command!"
-	 * or "Currently managing 3 attack groups with a total of 44 units".
-	 */
-	String getDescription();
+	private String mDescription;
+	private boolean mOperational;
 
-	/**
-	 * Returns true if this agent is ready to do its thing,
-	 * eg. all requirements are met.
-	 */
-	boolean isOperational();
+	@Override
+	public String getDescription() {
+		return mDescription;
+	}
+	public void setDescription(String description) {
+		mDescription = description;
+	}
+
+	@Override
+	public boolean isOperational() {
+		return mOperational;
+	}
+	public void setOperational(boolean operational) {
+		mOperational = operational;
+	}
+
+	@Override
+	public String toString() {
+
+		return String.format("%s: [%4soperational] '%s'",
+				getClass().getSimpleName(),
+				isOperational() ? "" : "non-",
+				getDescription());
+	}
 }

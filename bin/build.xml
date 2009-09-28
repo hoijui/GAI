@@ -193,6 +193,9 @@ Please specify either main.class, for example:
 		</java>
 	</target>
 
+	<target name="jconsole" depends="init">
+jconsole -J-Djava.class.path=${JAVA_HOME}/lib/jconsole.jar:${JAVA_HOME}/lib/tools.jar:/home/robin/svn_work/robin/Development/Projects/Others/spring/builds/cmake/gai/linux32/debug/AI/Interfaces/Java/AIInterface.jar:/home/robin/svn_work/robin/Development/Projects/Others/spring/builds/cmake/gai/linux32/debug/AI/Skirmish/GAI/SkirmishAI.jar:/home/robin/svn_work/robin/Development/Projects/Others/spring/repos/gai/AI/Skirmish/GAI/data/jlib/spring.jar:/home/robin/svn_work/robin/Development/Projects/Others/spring/repos/gai/AI/Skirmish/GAI/data/jlib/groovy-all.jar
+	</target>
 
 	<target name="compile" depends="init">
 		<groovyc destdir="${build.classes.dir}">

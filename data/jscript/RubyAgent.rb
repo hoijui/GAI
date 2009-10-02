@@ -1,15 +1,15 @@
-require 'java'
+include Java
 
-include_class 'gai.agents.Agent'
-include_class 'gai.agents.AgentStatus'
-#include_class 'gai.agents.AgentEnvironment'
+module Agents
+	include_package "gai.agents"
+end
 
 class RubyAgent
-	include Agent
+	include Agents::Agent
 
 	NAME = "JRuby"
 	DESCRIPTION = "sprinkling scripty beauty, nothing more"
-	@@status = AgentStatus.new
+	@@status = Agents::AgentStatus.new
 	def @@status.getDescription
 		"being very ruby"
 	end

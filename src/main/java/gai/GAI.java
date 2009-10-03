@@ -46,7 +46,7 @@ public class GAI extends AbstractOOAI implements OOAI {
 	private static final int SUCCESS   = 0;
 	private static final int FAILURE_X = 1;
 
-    private Log log = LogFactory.getLog(GAI.class);
+	private Log log = LogFactory.getLog(GAI.class);
 	private Environment mEnv;
 
 	@Override

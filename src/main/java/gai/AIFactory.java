@@ -23,9 +23,9 @@
 package gai;
 
 
-import com.clan_sy.spring.ai.oo.OOAI;
-import com.clan_sy.spring.ai.oo.OOAICallback;
-import com.clan_sy.spring.ai.oo.OOAIFactory;
+import com.springrts.ai.oo.OOAI;
+import com.springrts.ai.oo.OOAICallback;
+import com.springrts.ai.oo.OOAIFactory;
 
 /**
  * The main entry point of the AI, from the engines point of view.

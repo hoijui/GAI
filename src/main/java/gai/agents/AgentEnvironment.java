@@ -25,7 +25,7 @@ package gai.agents;
 
 import gai.tasks.Task;
 
-import com.clan_sy.spring.ai.oo.OOAICallback;
+import com.springrts.ai.oo.OOAICallback;
 
 /**
  * Forms the central point of reference of the architecture of the AI

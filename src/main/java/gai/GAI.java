@@ -27,19 +27,19 @@ import gai.kernel.*;
 
 import org.apache.commons.logging.*;
 
-import com.clan_sy.spring.ai.AICommand;
-import com.clan_sy.spring.ai.AICommandWrapper;
-import com.clan_sy.spring.ai.command.*;
-import com.clan_sy.spring.ai.oo.AbstractOOAI;
-import com.clan_sy.spring.ai.oo.OOAI;
-import com.clan_sy.spring.ai.oo.OOAICallback;
+import com.springrts.ai.AICommand;
+import com.springrts.ai.AICommandWrapper;
+import com.springrts.ai.command.*;
+import com.springrts.ai.oo.AbstractOOAI;
+import com.springrts.ai.oo.OOAI;
+import com.springrts.ai.oo.OOAICallback;
 
 /**
  * This class represents an actual instance of a GAI Skirmish AI.
  * Each team controlled by GAI has an instance of this class assigned.
  * This is the main centre of engine -> AI communication.
  * For AI -> engine communication, see
- * {@link com.clan_sy.spring.ai.oo.OOAICallback}.
+ * {@link com.springrts.ai.oo.OOAICallback}.
  */
 public class GAI extends AbstractOOAI implements OOAI {
 

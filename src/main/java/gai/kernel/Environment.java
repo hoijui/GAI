@@ -25,7 +25,7 @@ package gai.kernel;
 
 import java.util.Set;
 
-import com.clan_sy.spring.ai.oo.OOAICallback;
+import com.springrts.ai.oo.OOAICallback;
 
 import gai.agents.Agent;
 import gai.agents.AgentEnvironment;

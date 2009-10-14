@@ -4,14 +4,16 @@
 
 	<properties>
 		<my.version>0.1-SNAPSHOT</my.version>
+		<java.ai.int.src.dir>${basedir}/../../Interfaces/Java</java.ai.int.src.dir>
+		<java.ai.int.build.dir>${java.ai.int.src.dir}</java.ai.int.build.dir>
+		<java.ai.int.jlib.dir>${java.ai.int.src.dir}/data/jlib</java.ai.int.jlib.dir>
 	</properties>
 
 	<profiles>
 		<profile>
 			<id>stand-alone</id>
 			<!--
-				There are no mandatory properties for this profile.
-				Optional properties:
+				Optional properties for this profile:
 				* java.ai.int.build.dir
 				  (where AIInterface.jar will be built, in case of
 				   out-of-source build)
@@ -20,25 +22,22 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<java.ai.int.src.dir>${basedir}/../../Interfaces/Java</java.ai.int.src.dir>
-				<java.ai.int.build.dir>${java.ai.int.src.dir}</java.ai.int.build.dir>
-				<java.ai.int.jlib.dir>${java.ai.int.src.dir}/data/jlib</java.ai.int.jlib.dir>
 			</properties>
 		</profile>
 
 		<profile>
 			<id>as-spring-subproject</id>
 			<!--
-				Mandatory properties for this profile:
+				Optional properties for this profile:
 				* java.ai.int.src.dir   (where data/jlib/*.jar can be found)
-				* java.ai.int.build.dir (where AIInterface.jar will be built)
+				* java.ai.int.build.dir (where AIInterface.jar will be built,
+				                         in case of out-of-source build)
 				* my.build.dir          (CAUTION: has to be relative to ${basedir};
 				                         will fail with an absolute path!)
 				* my.version
 			-->
 			<properties>
 				<my.build.dir>target</my.build.dir>
-				<java.ai.int.jlib.dir>${java.ai.int.src.dir}/data/jlib</java.ai.int.jlib.dir>
 			</properties>
 			<build>
 				<defaultGoal>package</defaultGoal>

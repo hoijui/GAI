@@ -26,33 +26,22 @@ package gai.kernel;
 import org.apache.commons.logging.*;
 
 import org.springframework.context.support.GenericApplicationContext;
-import org.springframework.context.support.StaticApplicationContext;
-import org.springframework.beans.factory.support.StaticListableBeanFactory;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.beans.factory.support.PropertiesBeanDefinitionReader;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Loads the Kernel and agents .
  * @see gai.agents.AgentEnvironment#getCallback()
  */
-public class BeanContainer extends StaticApplicationContext {
+public class BeanContainer extends GenericApplicationContext {
 
-	public static final ClassLoader MY_CLASS_LOADER = DefaultEnvironment.class.getClassLoader();
-    private static Log log = LogFactory.getLog("gai");
+	public static final ClassLoader MY_CLASS_LOADER = BeanContainer.class.getClassLoader();
+	private static Log log = LogFactory.getLog("gai");
 
-	// allows adding beans programmatically
-	private StaticListableBeanFactory mProgBeanList = null;
-
-	private BeanContainer(StaticListableBeanFactory progBeanList) {
-		super(new GenericApplicationContext(new DefaultListableBeanFactory(progBeanList)));
-		mProgBeanList = progBeanList;
-	}
+	private ApplicationContext context = null;
 
 	public static BeanContainer getInstance() {
-		return new BeanContainer(new StaticListableBeanFactory());
+		return new BeanContainer();
 	}
 
 	public void initContext() {
@@ -66,51 +55,14 @@ public class BeanContainer extends StaticApplicationContext {
 		ClassLoader originalContextClassLoader =
 				Thread.currentThread().getContextClassLoader();
 		Thread.currentThread().setContextClassLoader(MY_CLASS_LOADER);
+		//this.setClassLoader(MY_CLASS_LOADER);
 
-		Resource res_beans_xml   = new ClassPathResource("beans.xml", MY_CLASS_LOADER);
-		Resource res_beans_props = new ClassPathResource("beans.properties", MY_CLASS_LOADER);
+		context = new ClassPathXmlApplicationContext("beans.xml");
+		setParent(context);
 
-		this.setClassLoader(MY_CLASS_LOADER);
-
-		if (res_beans_xml.exists()) {
-			XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(this);
-			xmlReader.loadBeanDefinitions(res_beans_xml);
-			if (log.isInfoEnabled()) {
-                log.info("Loaded context from " + res_beans_xml);
-            }
-		}
-		System.out.println("beans.properties found? " + res_beans_props.exists());
-		if (res_beans_props.exists()) {
-			PropertiesBeanDefinitionReader propReader = new PropertiesBeanDefinitionReader(this);
-			propReader.loadBeanDefinitions(res_beans_props);
-			if (log.isInfoEnabled()) {
-                log.info("Loaded context from " + res_beans_props);
-            }
-		}
-		((GenericApplicationContext)this.getParent()).refresh();
-		this.refresh();
 
 		// reset the original CL, to try to prevent crashing with
 		// other Java AI implementations
 		Thread.currentThread().setContextClassLoader(originalContextClassLoader);
 	}
-
-	public void setupContext() {
-
-		addBean("classLoader", MY_CLASS_LOADER);
-	}
-
-
-	public void addBean(String name, Object bean) {
-		mProgBeanList.addBean(name, bean);
-	}
-	public boolean addBean(String name, Object bean, boolean overwrite) {
-
-		if (overwrite || !isBeanNameInUse(name)) {
-			addBean(name, bean);
-			return true;
-		}
-		return false;
-	}
-
 }

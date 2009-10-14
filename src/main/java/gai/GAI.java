@@ -55,7 +55,6 @@ public class GAI extends AbstractOOAI implements OOAI {
 		try {
 			BeanContainer beans = BeanContainer.getInstance();
 			beans.initContext();
-			beans.setupContext();
 
 			mEnv = (Environment) beans.getBean("environment");
 			mEnv.init(beans, teamId, callback);

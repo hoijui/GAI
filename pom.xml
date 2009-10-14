@@ -2,15 +2,64 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+	<properties>
+		<my.version>0.1-SNAPSHOT</my.version>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>stand-alone</id>
+			<!--
+				There are no mandatory properties for this profile.
+				Optional properties:
+				* java.ai.int.build.dir
+				  (where AIInterface.jar will be built, in case of
+				   out-of-source build)
+			-->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<java.ai.int.src.dir>${basedir}/../../Interfaces/Java</java.ai.int.src.dir>
+				<java.ai.int.build.dir>${java.ai.int.src.dir}</java.ai.int.build.dir>
+				<java.ai.int.jlib.dir>${java.ai.int.src.dir}/data/jlib</java.ai.int.jlib.dir>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>as-spring-subproject</id>
+			<!--
+				Mandatory properties for this profile:
+				* java.ai.int.src.dir   (where data/jlib/*.jar can be found)
+				* java.ai.int.build.dir (where AIInterface.jar will be built)
+				* my.build.dir          (CAUTION: has to be relative to ${basedir};
+				                         will fail with an absolute path!)
+				* my.version
+			-->
+			<properties>
+				<my.build.dir>target</my.build.dir>
+				<java.ai.int.jlib.dir>${java.ai.int.src.dir}/data/jlib</java.ai.int.jlib.dir>
+			</properties>
+			<build>
+				<defaultGoal>package</defaultGoal>
+				<finalName>SkirmishAI</finalName>
+				<directory>${my.build.dir}</directory>
+			</build>
+		</profile>
+	</profiles>
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>gai</groupId>
 	<artifactId>GAI</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1-SNAPSHOT</version>
-	<name>GAI</name>
+	<version>${my.version}</version>
+	<name>General Artificial Intelligence</name>
 	<url>http://springrts.com/wiki/AI:GAI</url>
 
 	<build>
+		<outputDirectory>${project.build.directory}/classes</outputDirectory>
+		<testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
+
 		<plugins>
 			<!--
 				Set source compatibility to 1.5, so Annotations are supported.
@@ -43,19 +92,38 @@
 				</configuration>
 			</plugin>
 
-			<!--
-				Copies the dependencies to the target/dependency dir
-				during the package phase
-			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
+					<!--
+						This copies the dependencies to the target/dependency dir
+						during the package phase.
+					-->
 					<execution>
-						<phase>package</phase>
+						<phase>generate-sources</phase>
 						<goals>
 							<goal>copy-dependencies</goal>
 						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/jlib</outputDirectory>
+							<excludeArtifactIds>jna,vecmath,Java-AIInterface</excludeArtifactIds>
+						</configuration>
+					</execution>
+					<!--
+						This generates a classpath out of all the dependencies
+						of the project, valid on the local system, and stores
+						it in a text file.
+					-->
+					<execution>
+						<id>build-classpath</id>
+						<phase>package</phase>
+						<goals>
+							<goal>build-classpath</goal>
+						</goals>
+						<configuration>
+							<outputFile>${project.build.directory}/cp.txt</outputFile>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -65,7 +133,7 @@
 	<scm>
 		<connection>scm:git:git://github.com/hoijui/GAI.git</connection>
 		<url>http://github.com/hoijui/GAI</url>
-		<developerConnection>scm:git:git@github.com:hoijui/GAI.git</developerConnection>	
+		<developerConnection>scm:git:git@github.com:hoijui/GAI.git</developerConnection>
 	</scm>
 
 	<dependencies>
@@ -75,25 +143,26 @@
 		-->
 		<dependency>
 			<groupId>com.springrts</groupId>
-			<artifactId>JavaAIInterface</artifactId>
+			<artifactId>Java-AIInterface</artifactId>
 			<version>0.1</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/../../../../../builds/cmake/gai/linux32/debug/AI/Interfaces/Java/AIInterface.jar</systemPath>
+			<systemPath>${java.ai.int.build.dir}/AIInterface.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>vecmath</groupId>
 			<artifactId>vecmath</artifactId>
 			<version>0.1</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/../../Interfaces/Java/data/jlib/vecmath.jar</systemPath>
+			<systemPath>${java.ai.int.src.dir}/data/jlib/vecmath.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>jna</groupId>
 			<artifactId>jna</artifactId>
 			<version>0.1</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/../../Interfaces/Java/data/jlib/jna/jna.jar</systemPath>
+			<systemPath>${java.ai.int.src.dir}/data/jlib/jna.jar</systemPath>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>

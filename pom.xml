@@ -13,14 +13,34 @@
 		<profile>
 			<id>stand-alone</id>
 			<!--
+				This profile expects the Java AI Interface libs and dependencies
+				in a separate folder (default: ${basedir}/Java-AIInterface).
+				Optional properties for this profile:
+				* java.ai.int.src.dir
+				  a dir containing the following files:
+				  - AIInterface.jar
+				  - AIInterface-src.jar
+				  - jna.jar
+				  - vecmath.jar
+			-->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<java.ai.int.src.dir>${basedir}/Java-AIInterface</java.ai.int.src.dir>
+				<java.ai.int.build.dir>${java.ai.int.src.dir}</java.ai.int.build.dir>
+				<java.ai.int.jlib.dir>${java.ai.int.src.dir}</java.ai.int.jlib.dir>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>custom</id>
+			<!--
 				Optional properties for this profile:
 				* java.ai.int.build.dir
 				  (where AIInterface.jar will be built, in case of
 				   out-of-source build)
 			-->
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 			<properties>
 			</properties>
 		</profile>

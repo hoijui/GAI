@@ -1,0 +1,8 @@
+# default maven build dir
+/target/
+
+# default log dir (when running stand-alone)
+/log/
+
+# default stand-alone Java AI Interface + debs dir
+/Java-AIInterface/

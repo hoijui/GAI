@@ -1,6 +1,12 @@
 TODO
 ====
 
+logging:
+	- log to correct location
+	  the difficulty is getting the path into the log4j.properties file
+	  alternative: constructing the real path at runtime
+	  best: replace a property in the config file at runtime, while reading it
+
 save & load options:
 	- using serialization
 		* groovy built-in

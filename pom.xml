@@ -6,22 +6,29 @@
 		<my.version>0.1-SNAPSHOT</my.version>
 		<java.ai.int.src.dir>${basedir}/../../Interfaces/Java</java.ai.int.src.dir>
 		<java.ai.int.build.dir>${java.ai.int.src.dir}</java.ai.int.build.dir>
-		<java.ai.int.jlib.dir>${java.ai.int.src.dir}/data/jlib</java.ai.int.jlib.dir>
+		<java.oo.wrp.src.dir>${basedir}/../../Wrappers/JavaOO</java.oo.wrp.src.dir>
+		<java.oo.wrp.build.dir>${java.oo.wrp.src.dir}</java.oo.wrp.build.dir>
 	</properties>
 
 	<profiles>
 		<profile>
 			<id>stand-alone</id>
 			<!--
-				This profile expects the Java AI Interface libs and dependencies
+				This profile expects the Java AI Interface libs
 				in a separate folder (default: ${basedir}/Java-AIInterface).
+				Additionally, it expects the Java OO Wrapper libs
+				and dependencies in a separate folder
+				(default: ${basedir}/JavaOO-AIWrapper).
 				Optional properties for this profile:
 				* java.ai.int.src.dir
 				  a dir containing the following files:
 				  - AIInterface.jar
 				  - AIInterface-src.jar
-				  - jna.jar
-				  - vecmath.jar
+				* java.oo.wrp.src.dir
+				  a dir containing the following files:
+				  - JavaAIOOWrapper.jar
+				  - JavaAIOOWrapper-src.jar
+				  - jlib/vecmath.jar
 			-->
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -29,7 +36,8 @@
 			<properties>
 				<java.ai.int.src.dir>${basedir}/Java-AIInterface</java.ai.int.src.dir>
 				<java.ai.int.build.dir>${java.ai.int.src.dir}</java.ai.int.build.dir>
-				<java.ai.int.jlib.dir>${java.ai.int.src.dir}</java.ai.int.jlib.dir>
+				<java.oo.wrp.src.dir>${basedir}/JavaOO-AIWrapper</java.oo.wrp.src.dir>
+				<java.oo.wrp.build.dir>${java.oo.wrp.src.dir}</java.oo.wrp.build.dir>
 			</properties>
 		</profile>
 
@@ -39,6 +47,9 @@
 				Optional properties for this profile:
 				* java.ai.int.build.dir
 				  (where AIInterface.jar will be built, in case of
+				   out-of-source build)
+				* java.oo.wrp.build.dir
+				  (where JavaAIOOWrapper.jar will be built, in case of
 				   out-of-source build)
 			-->
 			<properties>
@@ -126,7 +137,7 @@
 						</goals>
 						<configuration>
 							<outputDirectory>${project.build.directory}/jlib</outputDirectory>
-							<excludeArtifactIds>jna,vecmath,Java-AIInterface</excludeArtifactIds>
+							<excludeArtifactIds>Java-AIInterface</excludeArtifactIds>
 						</configuration>
 					</execution>
 					<!--
@@ -168,18 +179,18 @@
 			<systemPath>${java.ai.int.build.dir}/AIInterface.jar</systemPath>
 		</dependency>
 		<dependency>
+			<groupId>com.springrts</groupId>
+			<artifactId>JavaOO-AIWrapper</artifactId>
+			<version>0.1</version>
+			<scope>system</scope>
+			<systemPath>${java.oo.wrp.build.dir}/JavaAIOOWrapper.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>vecmath</groupId>
 			<artifactId>vecmath</artifactId>
 			<version>0.1</version>
 			<scope>system</scope>
-			<systemPath>${java.ai.int.src.dir}/data/jlib/vecmath.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>jna</groupId>
-			<artifactId>jna</artifactId>
-			<version>0.1</version>
-			<scope>system</scope>
-			<systemPath>${java.ai.int.src.dir}/data/jlib/jna.jar</systemPath>
+			<systemPath>${java.oo.wrp.src.dir}/jlib/vecmath.jar</systemPath>
 		</dependency>
 
 		<dependency>

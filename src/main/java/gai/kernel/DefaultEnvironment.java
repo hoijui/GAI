@@ -27,7 +27,7 @@ import gai.tasks.Task;
 import gai.tasks.TaskQueue;
 import gai.agents.Agent;
 
-import com.springrts.ai.oo.OOAICallback;
+import com.springrts.ai.oo.clb.OOAICallback;
 
 import org.apache.commons.logging.*;
 

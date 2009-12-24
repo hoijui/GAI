@@ -23,16 +23,13 @@
 package gai;
 
 
+import com.springrts.ai.oo.AIEvent;
+import com.springrts.ai.oo.EventAIException;
 import gai.kernel.*;
 
-import org.apache.commons.logging.*;
-
-import com.springrts.ai.AICommand;
-import com.springrts.ai.AICommandWrapper;
-import com.springrts.ai.command.*;
-import com.springrts.ai.oo.AbstractOOAI;
-import com.springrts.ai.oo.OOAI;
-import com.springrts.ai.oo.OOAICallback;
+import com.springrts.ai.AI;
+import com.springrts.ai.oo.OOEventAI;
+import com.springrts.ai.oo.evt.InitAIEvent;
 
 /**
  * This class represents an actual instance of a GAI Skirmish AI.
@@ -41,70 +38,29 @@ import com.springrts.ai.oo.OOAICallback;
  * For AI -> engine communication, see
  * {@link com.springrts.ai.oo.OOAICallback}.
  */
-public class GAI extends AbstractOOAI implements OOAI {
+public class GAI extends OOEventAI implements AI {
 
-	private static final int SUCCESS   = 0;
-	private static final int FAILURE_X = 1;
-
-	private Log log = LogFactory.getLog(GAI.class);
+	private org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(GAI.class);
 	private Environment mEnv;
 
 	@Override
-	public int init(int teamId, OOAICallback callback) {
+	public void handleEvent(AIEvent evt) throws EventAIException {
 
-		try {
-			BeanContainer beans = BeanContainer.getInstance();
-			beans.initContext();
+		if (evt instanceof InitAIEvent) {
+			InitAIEvent initEvt = (InitAIEvent) evt;
+			try {
+				BeanContainer beans = BeanContainer.getInstance();
+				beans.initContext();
 
-			mEnv = (Environment) beans.getBean("environment");
-			mEnv.init(beans, teamId, callback);
-		} catch (Exception ex) {
-			log.error("Failed initializing DefaultEnvironment", ex);
-			mEnv = null;
-			return FAILURE_X;
+				mEnv = (Environment) beans.getBean("environment");
+				mEnv.init(beans, initEvt.getSkirmishAIId(), initEvt.getCallback());
+			} catch (Exception ex) {
+				log.error("Failed initializing DefaultEnvironment", ex);
+				mEnv = null;
+				throw new EventAIException(ex);
+			}
 		}
 
-		//sendMessage("Hello Engine! sent by GAI, a Groovy Skirmish AI.");
-		//setPause(true, "Testing pause");
-
-		return SUCCESS;
-	}
-
-	@Override
-	public int update(int frame) {
-
-		mEnv.handleEvent(frame);
-
-		return SUCCESS;
-	}
-
-	/**
-	 * Sends a command from the AI to the engine.
-	 */
-	private boolean handleEngineCommand(AICommand command) {
-		return mEnv.getCallback().getEngine().handleCommand(AICommandWrapper.COMMAND_TO_ID_ENGINE, -1, command) == 0;
-	}
-
-	/**
-	 * Sends a chat message to the engine, which is seen by the players
-	 * during the game and stored in the engine log.
-	 */
-	private void sendMessage(String message) {
-
-		SendTextMessageAICommand msgCmd = new SendTextMessageAICommand(message, 0);
-		handleEngineCommand(msgCmd);
-	}
-
-	/**
-	 * Pauses or unpauses the game.
-	 */
-	private boolean setPause(boolean enable, String reason) {
-
-		PauseAICommand cmd = new PauseAICommand(enable, reason);
-		boolean success = handleEngineCommand(cmd);
-		return success;
-	}
-	private boolean setPause(boolean enable) {
-		return setPause(enable, "unknown");
+		mEnv.handleEvent(evt);
 	}
 }

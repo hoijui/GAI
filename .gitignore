@@ -6,3 +6,6 @@
 
 # default stand-alone Java AI Interface + debs dir
 /Java-AIInterface/
+
+# default stand-alone Java OO Wrapper + debs dir
+/JavaOO-AIWrapper/

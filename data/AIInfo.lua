@@ -25,7 +25,7 @@ local infos = {
 	},
 	{
 		key    = 'className',
-		value  = 'gai.AIFactory',
+		value  = 'gai.GAI',
 		desc   = 'fully qualified name of a class that implements interface com.clan_sy.spring.ai.AI',
 	},
 	{

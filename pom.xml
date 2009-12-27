@@ -26,8 +26,8 @@
 				  - AIInterface-src.jar
 				* java.oo.wrp.src.dir
 				  a dir containing the following files:
-				  - JavaAIOOWrapper.jar
-				  - JavaAIOOWrapper-src.jar
+				  - JavaOO-AIWrapper.jar
+				  - JavaOO-AIWrapper-src.jar
 				  - jlib/vecmath.jar
 			-->
 			<activation>
@@ -49,7 +49,7 @@
 				  (where AIInterface.jar will be built, in case of
 				   out-of-source build)
 				* java.oo.wrp.build.dir
-				  (where JavaAIOOWrapper.jar will be built, in case of
+				  (where JavaOO-AIWrapper.jar will be built, in case of
 				   out-of-source build)
 			-->
 			<properties>
@@ -183,7 +183,7 @@
 			<artifactId>JavaOO-AIWrapper</artifactId>
 			<version>0.1</version>
 			<scope>system</scope>
-			<systemPath>${java.oo.wrp.build.dir}/JavaAIOOWrapper.jar</systemPath>
+			<systemPath>${java.oo.wrp.build.dir}/JavaOO-AIWrapper.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>vecmath</groupId>

@@ -116,7 +116,7 @@
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>dependency</classpathPrefix>
 							<packageName>gai</packageName>
-							<mainClass>gai.AIFactory</mainClass>
+							<mainClass>gai.GAI</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

@@ -157,6 +157,31 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!--
+				Manages source file headers.
+				Use of this is not recommended, as it is still quite fail.
+				For example, there is no support for different authors or years,
+				all headers do really have to be exactly equal.
+				tasks:
+				- license:check     checks headers
+				- license:format    changes headers
+			-->
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<header>src/etc/header_template.txt</header>
+					<includes>
+						<include>src/**/*.java</include>
+					</includes>
+					<properties>
+						<owner>Robin Vobruba</owner>
+						<year>${project.inceptionYear}</year>
+						<email>hoijui.quaero@gmail.com</email>
+					</properties>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

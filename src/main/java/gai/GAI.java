@@ -25,11 +25,16 @@ package gai;
 
 import com.springrts.ai.oo.AIEvent;
 import com.springrts.ai.oo.EventAIException;
+import gai.event.BadStateException;
+import gai.event.InvalidGEventException;
 import gai.kernel.*;
 
 import com.springrts.ai.AI;
 import com.springrts.ai.oo.OOEventAI;
-import com.springrts.ai.oo.evt.InitAIEvent;
+import com.springrts.ai.oo.clb.OOAICallback;
+import com.springrts.ai.oo.evt.*;
+import gai.event.EngineGEvent;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * This class represents an actual instance of a GAI Skirmish AI.
@@ -40,7 +45,6 @@ import com.springrts.ai.oo.evt.InitAIEvent;
  */
 public class GAI extends OOEventAI implements AI {
 
-	private org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(GAI.class);
 	private Environment mEnv;
 
 	@Override
@@ -55,12 +59,20 @@ public class GAI extends OOEventAI implements AI {
 				mEnv = (Environment) beans.getBean("environment");
 				mEnv.init(beans, initEvt.getSkirmishAIId(), initEvt.getCallback());
 			} catch (Exception ex) {
-				log.error("Failed initializing DefaultEnvironment", ex);
+				LogFactory.getLog(GAI.class).error("Failed initializing DefaultEnvironment", ex);
 				mEnv = null;
 				throw new EventAIException(ex);
 			}
 		}
 
-		mEnv.handleEvent(evt);
+		try {
+			mEnv.handle(new EngineGEvent(evt));
+		} catch (InvalidGEventException ex) {
+			LogFactory.getLog(GAI.class).error(null, ex);
+			throw new EventAIException(ex);
+		} catch (BadStateException ex) {
+			LogFactory.getLog(GAI.class).error(null, ex);
+			throw new EventAIException(ex);
+		}
 	}
 }

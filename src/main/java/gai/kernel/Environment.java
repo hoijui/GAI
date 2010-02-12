@@ -1,7 +1,5 @@
 /*
-	Copyright (c) 2009
-		Marcel Hauf <marcel.hauf@googlemail.com>
-		Robin Vobruba <hoijui.quaero@gmail.com>
+	Copyright (c) 2009 Robin Vobruba <hoijui.quaero@gmail.com>
 
 	This file is part of GAI (Groovy skirmish Artificial Intelligence
 	for the spring RTS game engine).
@@ -29,6 +27,8 @@ import com.springrts.ai.oo.clb.OOAICallback;
 
 import gai.agents.Agent;
 import gai.agents.AgentEnvironment;
+import gai.event.GEventReceiver;
+import gai.event.GEventSender;
 import gai.tasks.TaskQueue;
 
 /**
@@ -39,7 +39,7 @@ import gai.tasks.TaskQueue;
  * see {@link http://springrts.com/wiki/AI:GAI the spring Wiki}
  * and {@link http://wiki.github.com/hoijui/springGAI the GAI Wiki}.
  */
-public interface Environment extends AgentEnvironment {
+public interface Environment extends AgentEnvironment, GEventReceiver, GEventSender {
 
 	/**
 	 * Initializes this environment with a complete AI instance specific context.
@@ -67,10 +67,4 @@ public interface Environment extends AgentEnvironment {
 	 * Enrolls the new agents after removing all current ones.
 	 */
 	void setAgents(Set<Agent> agents);
-
-	/**
-	 * Updates the environment.
-	 * This is the AIs main handleEvent method, that distributes to all sub parts.
-	 */
-	int handleEvent(Object engineEvent);
 }

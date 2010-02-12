@@ -23,24 +23,24 @@
 package gai.kernel;
 
 
+import com.springrts.ai.oo.AIEvent;
+import gai.event.BadStateException;
+import gai.event.GEventReceiver;
+import gai.event.InvalidGEventException;
 import gai.tasks.Task;
 import gai.tasks.TaskQueue;
 import gai.agents.Agent;
 
 import com.springrts.ai.oo.clb.OOAICallback;
+import com.springrts.ai.oo.evt.UpdateAIEvent;
+import gai.event.DefaultGEventSender;
+import gai.event.GEvent;
+import java.util.Collection;
 
 import org.apache.commons.logging.*;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericApplicationContext;
-import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.beans.factory.support.PropertiesBeanDefinitionReader;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ClassPathResource;
-
 import java.util.Set;
 import java.util.HashSet;
-import java.util.PriorityQueue;
 
 /**
  * Default implementation of <code>Environment</code>.
@@ -55,6 +55,7 @@ public class DefaultEnvironment implements Environment {
 	private Set<Agent> mAgents = new HashSet<Agent>();
 	private TaskQueue mTaskQueue;
 	private boolean mInitialized = false;
+	private DefaultGEventSender eventSender = new DefaultGEventSender();
 
     private Log log = LogFactory.getLog(DefaultEnvironment.class);
 
@@ -80,30 +81,44 @@ public class DefaultEnvironment implements Environment {
 		for (Agent agent : mAgents) {
 			agent.engage(this);
 		}
+
+		// register agents for global events
+		for (Agent agent : mAgents) {
+			if (agent instanceof GEventReceiver) {
+				eventSender.addGEventReceiver((GEventReceiver) agent);
+			}
+		}
 	}
 
 	@Override
-	public int handleEvent(Object engineEvent) {
+	public void handle(GEvent event) throws InvalidGEventException, BadStateException {
 
 		// TODO FIXME big haxors!
-		if (engineEvent instanceof Integer) {
-			// assume it is an update event
-			int frame = ((Integer)engineEvent).intValue();
-			if ((frame % (10 * 30)) == 0) {
-				System.out.printf("Agent Stati for frame %d\n", frame);
-				System.out.printf(" %10s   %40s   %s\n",
-						"[Name]", "[Description]", "[Status.Description]");
-				for (Agent agent : mAgents) {
-					System.out.printf(" %10s | %40s | %s\n",
-							agent.getName(), agent.getDescription(),
-							agent.getStatus().getDescription());
+		if (event.getTags().contains("engine")) {
+			AIEvent engineEvent = (AIEvent) event.getProperties().get("engineEvent");
+
+			if (engineEvent instanceof UpdateAIEvent) {
+				UpdateAIEvent updateEvent = (UpdateAIEvent) engineEvent;
+				int frame = updateEvent.getFrame();
+				if ((frame % (10 * 30)) == 0) {
+					System.out.printf("Agent Stati for frame %d\n", frame);
+					System.out.printf(" %10s   %40s   %s\n",
+							"[Name]", "[Description]", "[Status.Description]");
+					for (Agent agent : mAgents) {
+						System.out.printf(" %10s | %40s | %s\n",
+								agent.getName(), agent.getDescription(),
+								agent.getStatus().getDescription());
+					}
 				}
 			}
 		}
-		
-		return 0;
+
+		eventSender.send(event);
 	}
 
+	private void send(GEvent event) {
+		// TODO: send to all parts of the environment
+	}
 
 
 	/* (non-Javadoc)
@@ -190,5 +205,20 @@ public class DefaultEnvironment implements Environment {
 		for (Agent agent : agents) {
 			enrole(agent);
 		}
+	}
+
+	@Override
+	public void addGEventReceiver(GEventReceiver eventReceiver) {
+		eventSender.addGEventReceiver(eventReceiver);
+	}
+
+	@Override
+	public void removeGEventReceiver(GEventReceiver eventReceiver) {
+		eventSender.removeGEventReceiver(eventReceiver);
+	}
+
+	@Override
+	public Collection<String> getSuppliedTags() {
+		return eventSender.getSuppliedTags();
 	}
 }

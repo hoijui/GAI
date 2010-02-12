@@ -47,6 +47,35 @@ public class GAI extends OOEventAI implements AI {
 
 	private Environment mEnv;
 
+	/**
+	 * Can be used for simplistic testing of the AI,
+	 * without having to start the engine.
+	 */
+	public static void main(String[] args) throws Exception {
+
+		OOEventAI ai = new GAI();
+
+		final int teamId = 0;
+		OOAICallback callback = null;
+		InitAIEvent initEvt = new InitAIEvent(teamId, callback);
+		ai.handleEvent(initEvt);
+
+		// start update cycle (aprox. 30 frames per second)
+		int frame = 0;
+		boolean running = true;
+		try {
+			while (running) {
+				Thread.sleep(33);
+				//System.out.println("update(frame = ${frame})");
+				UpdateAIEvent updateAIEvent = new UpdateAIEvent(frame);
+				ai.handleEvent(updateAIEvent);
+				frame++;
+			}
+		} catch (InterruptedException ex) {
+			System.out.println("InterruptedException");
+		}
+	}
+
 	@Override
 	public void handleEvent(AIEvent evt) throws EventAIException {
 

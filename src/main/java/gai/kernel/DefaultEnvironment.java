@@ -1,17 +1,15 @@
 /*
-	Copyright (c) 2009
-		Marcel Hauf <marcel.hauf@googlemail.com>
-		Robin Vobruba <hoijui.quaero@gmail.com>
+	Copyright 2009 Robin Vobruba <hoijui.quaero@gmail.com>
 
-	This file is part of GAI (Groovy skirmish Artificial Intelligence
-	for the spring RTS game engine).
+	This file is part of the Groovy Artificial Intelligence (GAI),
+	a skirmish AI for the Spring RTS game engine.
 
 	GAI is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 2 of the License, or
 	(at your option) any later version.
 
-	Foobar is distributed in the hope that it will be useful,
+	GAI is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.

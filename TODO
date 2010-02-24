@@ -1,19 +1,18 @@
-TODO
-====
+                         Groovy Artificial Intelligence
+                  A skirmish AI for the Spring RTS game engine
+
+                                      TODO
 
 logging:
-	- log to correct location
-	  the difficulty is getting the path into the log4j.properties file
-	  alternative: constructing the real path at runtime
-	  best: replace a property in the config file at runtime, while reading it
+ - log to correct location
+   the difficulty is getting the path into the log4j.properties file
+   alternative: constructing the real path at runtime
+   best: replace a property in the config file at runtime, while reading it
 
 save & load options:
-	- using serialization
-		* groovy built-in
-		* XStream (XML)
-	- save nothing, but (re-)analyze the battle
-	  pro: makes the AI suitable for jump-in-AI if a human player leaves the battle
-
-discuss the AIs basic architecture:
-	eg, should we use an agent based approach?
+ - using serialization
+   * groovy built-in
+   * XStream (XML)
+ - save nothing, but (re-)analyze the battle
+   pro: makes the AI suitable for jump-in-AI if a human player leaves the battle
 

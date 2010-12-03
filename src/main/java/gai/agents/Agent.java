@@ -29,8 +29,8 @@ import java.io.Serializable;
  * scheduling new ones.
  * For a more detailed description of <code>Agent</code>s and info about
  * how to develop and share them,
- * see {@link http://springrts.com/wiki/AI:GAI the spring Wiki}
- * and {@link http://wiki.github.com/hoijui/springGAI the GAI Wiki}.
+ * see <a href="http://springrts.com/wiki/AI:GAI">the spring Wiki</a>
+ * and <a href="http://wiki.github.com/hoijui/springGAI">the GAI Wiki</a>.
  */
 public interface Agent extends Serializable {
 

@@ -36,8 +36,8 @@ import gai.tasks.TaskQueue;
  * All globally important parts of the AI are referenced.
  * So this can be seen as the skeleton of the (micro-)kernel.
  * For further info about the architecture of the AI,
- * see {@link http://springrts.com/wiki/AI:GAI the spring Wiki}
- * and {@link http://wiki.github.com/hoijui/springGAI the GAI Wiki}.
+ * see <a href="http://springrts.com/wiki/AI:GAI">the spring Wiki</a>
+ * and <a href="http://wiki.github.com/hoijui/springGAI">the GAI Wiki</a>.
  */
 public interface Environment extends AgentEnvironment, GEventReceiver, GEventSender {
 

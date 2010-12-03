@@ -73,7 +73,7 @@ public abstract class AbstractGEvent implements GEvent {
 	protected void setProperties(Map<String, Object> properties) {
 
 		clearProperties();
-		setProperties(properties);
+		this.properties.putAll(properties);
 	}
 	protected void addProperties(Map<String, Object> properties) {
 		this.properties.putAll(properties);

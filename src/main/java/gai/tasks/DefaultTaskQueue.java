@@ -21,9 +21,6 @@
 package gai.tasks;
 
 
-import gai.tasks.Task;
-import gai.tasks.TaskQueue;
-
 import java.util.PriorityQueue;
 
 /**

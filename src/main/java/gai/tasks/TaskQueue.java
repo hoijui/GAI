@@ -20,7 +20,7 @@
 
 package gai.tasks;
 
-	
+
 import java.util.Queue;
 
 /**
@@ -29,5 +29,5 @@ import java.util.Queue;
  * when queried.
  */
 public interface TaskQueue extends Queue<Task> {
-	
+
 }

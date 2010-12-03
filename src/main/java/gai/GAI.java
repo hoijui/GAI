@@ -21,27 +21,29 @@
 package gai;
 
 
-import com.springrts.ai.oo.AIEvent;
-import com.springrts.ai.oo.EventAIException;
-import gai.event.BadStateException;
-import gai.event.InvalidGEventException;
-import gai.kernel.*;
+import org.apache.commons.logging.LogFactory;
 
-import com.springrts.ai.AI;
 import com.springrts.ai.oo.OOEventAI;
 import com.springrts.ai.oo.clb.OOAICallback;
-import com.springrts.ai.oo.evt.*;
+import com.springrts.ai.oo.evt.InitAIEvent;
+import com.springrts.ai.oo.evt.UpdateAIEvent;
+import com.springrts.ai.oo.AIEvent;
+import com.springrts.ai.oo.EventAIException;
+
+import gai.event.BadStateException;
+import gai.event.InvalidGEventException;
 import gai.event.EngineGEvent;
-import org.apache.commons.logging.LogFactory;
+import gai.kernel.BeanContainer;
+import gai.kernel.Environment;
 
 /**
  * This class represents an actual instance of a GAI Skirmish AI.
  * Each team controlled by GAI has an instance of this class assigned.
- * This is the main centre of engine -> AI communication.
+ * This is the main center of engine -> AI communication.
  * For AI -> engine communication, see
- * {@link com.springrts.ai.oo.OOAICallback}.
+ * {@link com.springrts.ai.oo.clb.OOAICallback}.
  */
-public class GAI extends OOEventAI implements AI {
+public class GAI extends OOEventAI {
 
 	private Environment mEnv;
 

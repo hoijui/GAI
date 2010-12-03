@@ -29,7 +29,7 @@ import com.springrts.ai.oo.clb.OOAICallback;
  * Forms the central point of reference of the architecture of the AI
  * from an <code>Agent</code>s point of view.
  *
- * @see Environment
+ * @see gai.kernel.Environment
  */
 public interface AgentEnvironment {
 

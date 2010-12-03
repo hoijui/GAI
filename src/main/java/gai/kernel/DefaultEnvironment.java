@@ -35,7 +35,8 @@ import gai.event.DefaultGEventSender;
 import gai.event.GEvent;
 import java.util.Collection;
 
-import org.apache.commons.logging.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.Set;
 import java.util.HashSet;

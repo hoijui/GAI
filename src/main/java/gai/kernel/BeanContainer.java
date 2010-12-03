@@ -21,7 +21,8 @@
 package gai.kernel;
 
 
-import org.apache.commons.logging.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.ApplicationContext;

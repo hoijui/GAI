@@ -31,10 +31,10 @@ import java.util.Collection;
 
 /**
  * The generic or general event is what all GAI events derive from.
- * It is suposed to be the main method of interaction between
+ * It is supposed to be the main method of interaction between
  * the separate parts of the AI, like agents, for example.
  */
-public class EngineGEvent extends AbstractGEvent implements GEvent {
+public class EngineGEvent extends AbstractGEvent {
 
 	public EngineGEvent(AIEvent aiEvent) {
 

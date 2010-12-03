@@ -1,6 +1,121 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>gai</groupId>
+	<artifactId>GAI</artifactId>
+	<version>${my.version}</version>
+
+	<packaging>jar</packaging>
+
+	<name>General Artificial Intelligence</name>
+	<description>A JVM based Skirmish AI plugin for the Spring RTS engine</description>
+	<url>http://springrts.com/wiki/AI:GAI</url>
+	<inceptionYear>2009</inceptionYear>
+
+
+	<licenses>
+		<license>
+			<name>GPL</name>
+			<url>http://www.gnu.org/licenses/gpl.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+
+	<issueManagement>
+		<system>Mantis</system>
+		<url>http://springrts.com/mantis/</url>
+	</issueManagement>
+
+
+	<developers>
+		<developer>
+			<name>hoijui</name>
+			<email>hoijui.quaero@gmail.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<contributors>
+		<contributor>
+			<name>Agon</name>
+			<roles>
+				<role>ideas</role>
+			</roles>
+		</contributor>
+	</contributors>
+
+
+	<scm>
+		<connection>scm:git:git://github.com/hoijui/GAI.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:hoijui/GAI.git</developerConnection>
+		<url>http://github.com/hoijui/GAI</url>
+	</scm>
+
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+					<linkXref>true</linkXref>
+					<configLocation>${project.build.resources[0].directory}/checkstyle.xml</configLocation>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<linkXref>true</linkXref>
+					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+					<minimumTokens>50</minimumTokens>
+					<targetJdk>1.5</targetJdk>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>2.0.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<charset>${project.build.sourceEncoding}</charset>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+
+		</plugins>
+	</reporting>
+
 
 	<properties>
 		<my.version>0.1-SNAPSHOT</my.version>
@@ -8,7 +123,13 @@
 		<java.ai.int.build.dir>${java.ai.int.src.dir}</java.ai.int.build.dir>
 		<java.oo.wrp.src.dir>${basedir}/../../Wrappers/JavaOO</java.oo.wrp.src.dir>
 		<java.oo.wrp.build.dir>${java.oo.wrp.src.dir}</java.oo.wrp.build.dir>
+		<!--
+			This may get better support in Maven 3, see:
+			http://docs.codehaus.org/display/MAVENUSER/POM+Element+for+Source+File+Encoding
+		-->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
 
 	<profiles>
 		<profile>
@@ -78,28 +199,26 @@
 		</profile>
 	</profiles>
 
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>gai</groupId>
-	<artifactId>GAI</artifactId>
-	<packaging>jar</packaging>
-	<version>${my.version}</version>
-	<name>General Artificial Intelligence</name>
-	<url>http://springrts.com/wiki/AI:GAI</url>
-
 	<build>
 		<outputDirectory>${project.build.directory}/classes</outputDirectory>
 		<testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
 
 		<plugins>
-			<!--
-				Set source compatibility to 1.5, so Annotations are supported.
-			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 
@@ -159,12 +278,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<scm>
-		<connection>scm:git:git://github.com/hoijui/GAI.git</connection>
-		<url>http://github.com/hoijui/GAI</url>
-		<developerConnection>scm:git:git@github.com:hoijui/GAI.git</developerConnection>
-	</scm>
 
 	<dependencies>
 		<!--

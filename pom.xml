@@ -127,7 +127,9 @@
 			This may get better support in Maven 3, see:
 			http://docs.codehaus.org/display/MAVENUSER/POM+Element+for+Source+File+Encoding
 		-->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.encoding>UTF-8</project.build.encoding>
+		<project.build.sourceEncoding>${project.build.encoding}</project.build.sourceEncoding>
+		<project.build.resourceEncoding>${project.build.encoding}</project.build.resourceEncoding>
 	</properties>
 
 

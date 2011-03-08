@@ -119,10 +119,6 @@
 
 	<properties>
 		<my.version>0.1-SNAPSHOT</my.version>
-		<java.ai.int.src.dir>${basedir}/../../Interfaces/Java</java.ai.int.src.dir>
-		<java.ai.int.build.dir>${java.ai.int.src.dir}</java.ai.int.build.dir>
-		<java.oo.wrp.src.dir>${basedir}/../../Wrappers/JavaOO</java.oo.wrp.src.dir>
-		<java.oo.wrp.build.dir>${java.oo.wrp.src.dir}</java.oo.wrp.build.dir>
 		<!--
 			This may get better support in Maven 3, see:
 			http://docs.codehaus.org/display/MAVENUSER/POM+Element+for+Source+File+Encoding
@@ -135,57 +131,9 @@
 
 	<profiles>
 		<profile>
-			<id>stand-alone</id>
-			<!--
-				This profile expects the Java AI Interface libs
-				in a separate folder (default: ${basedir}/Java-AIInterface).
-				Additionally, it expects the Java OO Wrapper libs
-				and dependencies in a separate folder
-				(default: ${basedir}/JavaOO-AIWrapper).
-				Optional properties for this profile:
-				* java.ai.int.src.dir
-				  a dir containing the following files:
-				  - AIInterface.jar
-				  - AIInterface-src.jar
-				* java.oo.wrp.src.dir
-				  a dir containing the following files:
-				  - JavaOO-AIWrapper.jar
-				  - JavaOO-AIWrapper-src.jar
-				  - jlib/vecmath.jar
-			-->
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<java.ai.int.src.dir>${basedir}/Java-AIInterface</java.ai.int.src.dir>
-				<java.ai.int.build.dir>${java.ai.int.src.dir}</java.ai.int.build.dir>
-				<java.oo.wrp.src.dir>${basedir}/JavaOO-AIWrapper</java.oo.wrp.src.dir>
-				<java.oo.wrp.build.dir>${java.oo.wrp.src.dir}</java.oo.wrp.build.dir>
-			</properties>
-		</profile>
-
-		<profile>
-			<id>custom</id>
-			<!--
-				Optional properties for this profile:
-				* java.ai.int.build.dir
-				  (where AIInterface.jar will be built, in case of
-				   out-of-source build)
-				* java.oo.wrp.build.dir
-				  (where JavaOO-AIWrapper.jar will be built, in case of
-				   out-of-source build)
-			-->
-			<properties>
-			</properties>
-		</profile>
-
-		<profile>
 			<id>as-spring-subproject</id>
 			<!--
 				Optional properties for this profile:
-				* java.ai.int.src.dir   (where data/jlib/*.jar can be found)
-				* java.ai.int.build.dir (where AIInterface.jar will be built,
-				                         in case of out-of-source build)
 				* my.build.dir          (CAUTION: has to be relative to ${basedir};
 				                         will fail with an absolute path!)
 				* my.version
@@ -286,26 +234,17 @@
 			For finding Maven dependencies, go to:
 			http://www.mvnrepository.com/search.html
 		-->
+
+		<!-- Spring AI API -->
 		<dependency>
 			<groupId>com.springrts</groupId>
-			<artifactId>Java-AIInterface</artifactId>
+			<artifactId>ai-interface-java</artifactId>
 			<version>0.1</version>
-			<scope>system</scope>
-			<systemPath>${java.ai.int.build.dir}/AIInterface.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.springrts</groupId>
-			<artifactId>JavaOO-AIWrapper</artifactId>
+			<artifactId>ai-wrapper-javaoo</artifactId>
 			<version>0.1</version>
-			<scope>system</scope>
-			<systemPath>${java.oo.wrp.build.dir}/JavaOO-AIWrapper.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>vecmath</groupId>
-			<artifactId>vecmath</artifactId>
-			<version>0.1</version>
-			<scope>system</scope>
-			<systemPath>${java.oo.wrp.src.dir}/jlib/vecmath.jar</systemPath>
 		</dependency>
 
 		<dependency>
